@@ -1,0 +1,96 @@
+#!/usr/bin/env ruby
+
+require 'gli'
+require 'passman'
+
+module Passman
+  module App
+    CLIPBOARD_COMMAND = "xclip -selection clipboard"
+
+    extend GLI::App
+
+    program_desc 'Describe your application here'
+
+    version Passman::VERSION
+
+    default_value 'data/test.pdb.gpg'
+    flag [:d,:database]
+
+    desc 'Copy a password to the clipboard'
+    arg_name 'query'
+    command :copy do |c|
+      c.action do |global_options,options,args|
+        secrets = @db.find(args.first)
+
+        if secrets.empty?
+          raise "None found!"
+        elsif secrets.count > 1
+          raise "Ambiguous!"
+        end
+
+        secret = secrets.first
+
+        clipboard = `#{CLIPBOARD_COMMAND} -out`
+        system "echo -n '#{secret.secret}' | #{CLIPBOARD_COMMAND}"
+        system "sleep 5 && echo -n | echo -n '#{clipboard}' | #{CLIPBOARD_COMMAND} &"
+      end
+    end
+
+    desc 'Create a new password record'
+    command :new do |c|
+      c.action do |global_options,options,args|
+        attrs = Hash[ args.map { |a| a.split(/=/) } ]
+        secret = Secret.new(attrs)
+
+        @db.add secret
+        @db.write
+      end
+    end
+
+    desc 'Dump all password records to stdout'
+    command :'dump-all' do |c|
+      c.action do |global_options, options, args|
+        puts "Found #{@db.count} record(s) in database '#{@db.path}'"
+        @db.secrets.each do |secret|
+          puts
+
+          [:identifier, :category, :secret, :metadata].each do |field|
+            value = secret.send field
+            puts "#{field}: #{value}"
+          end
+        end
+      end
+    end
+
+    desc 'List password identifiers'
+    command :list do |c|
+      c.action do |global_options, options, args|
+        @db.secrets.each do |secret|
+          puts secret.identifier
+        end
+      end
+    end
+
+    pre do |global,command,options,args|
+      db_path = global[:database]
+      @db = Database.new(global[:database])
+      @db.read if File.exists? db_path
+
+      true
+    end
+
+    post do |global,command,options,args|
+      # Post logic here
+      # Use skips_post before a command to skip this
+      # block on that command only
+    end
+
+    on_error do |exception|
+      # Error logic here
+      # return false to skip default error handling
+      true
+    end
+  end
+end
+
+exit Passman::App.run(ARGV)

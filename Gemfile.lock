@@ -1,0 +1,18 @@
+PATH
+  remote: .
+  specs:
+    passman (0.0.1)
+      gli (= 2.9.0)
+      gpgme (= 2.0.2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    gli (2.9.0)
+    gpgme (2.0.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  passman!
