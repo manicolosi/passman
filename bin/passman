@@ -14,19 +14,23 @@ module Passman
     flag [:'database-directory']
     flag [:'database-default']
 
+    Passman::Commands.each do |cmd|
+      desc cmd.desc
+      arg_name cmd.arg_name
+      command cmd.name do |c|
+        c.action &cmd.method(:invoke)
+      end
+    end
+
     desc 'Copy a password to the clipboard'
     arg_name 'query'
     command :copy do |c|
       c.action do |global_options,options,args|
-        secrets = @db.find(args.first)
+        secret = @db.find_one(args.first)
 
-        if secrets.empty?
-          raise "None found!"
-        elsif secrets.count > 1
-          raise "Ambiguous!"
+        if secret
+          raise "Not found!"
         end
-
-        secret = secrets.first
 
         read_cmd = @config['commands', 'read_clipboard']
         write_cmd = @config['commands', 'write_clipboard']
@@ -51,6 +55,8 @@ module Passman
     desc 'Dump all password records to stdout'
     command :'dump-all' do |c|
       c.action do |global_options, options, args|
+        puts global_options.inspect
+
         puts "Found #{@db.count} record(s) in database '#{@db.path}'"
         @db.secrets.each do |secret|
           puts
@@ -77,19 +83,13 @@ module Passman
 
       @db = Database.new(@config['database'])
       @db.read if @db.exists?
+      global[:config] = @config
+      global[:database] = @db
 
       true
     end
 
-    post do |global,command,options,args|
-      # Post logic here
-      # Use skips_post before a command to skip this
-      # block on that command only
-    end
-
     on_error do |exception|
-      # Error logic here
-      # return false to skip default error handling
       true
     end
   end

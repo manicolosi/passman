@@ -33,6 +33,10 @@ module Passman
       secrets.select { |secret| secret.identifier == query }
     end
 
+    def find_one(query)
+      find(query).first
+    end
+
     def add(secret) secrets << secret
     end
 
