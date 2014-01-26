@@ -5,20 +5,35 @@ module Passman
   require 'gpgme'
 
   class Database
-    attr_reader :path, :secrets
+    attr_reader :secrets
 
-    def initialize(path)
-      @path = path
+    def initialize(config)
+      @config = config
       @crypto = GPGME::Crypto.new
       @secrets = []
+    end
+
+    def path
+      File.join directory, file
+    end
+
+    def exists?
+      File.exists? path
+    end
+
+    def directory
+      File.expand_path @config['directory']
+    end
+
+    def file
+      "#{@config['default']}.pdb.gpg"
     end
 
     def find(query)
       secrets.select { |secret| secret.identifier == query }
     end
 
-    def add(secret)
-      secrets << secret
+    def add(secret) secrets << secret
     end
 
     def count
@@ -33,10 +48,18 @@ module Passman
     end
 
     def write
+      ensure_path_exists
+
       File.open(path, 'w') do |file|
         data = dump_secrets
         @crypto.encrypt data, output: file
       end
+    end
+
+    def ensure_path_exists
+      dir = File.dirname path
+
+      FileUtils.mkdir_p dir unless File.exists? dir
     end
 
     private

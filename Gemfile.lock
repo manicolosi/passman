@@ -4,12 +4,18 @@ PATH
     passman (0.0.1)
       gli (= 2.9.0)
       gpgme (= 2.0.2)
+      toml (= 0.1.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    blankslate (2.1.2.4)
     gli (2.9.0)
     gpgme (2.0.2)
+    parslet (1.5.0)
+      blankslate (~> 2.0)
+    toml (0.1.0)
+      parslet (~> 1.5.0)
 
 PLATFORMS
   ruby

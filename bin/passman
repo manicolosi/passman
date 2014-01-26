@@ -5,16 +5,14 @@ require 'passman'
 
 module Passman
   module App
-    CLIPBOARD_COMMAND = "xclip -selection clipboard"
-
     extend GLI::App
 
     program_desc 'Describe your application here'
 
     version Passman::VERSION
 
-    default_value 'data/test.pdb.gpg'
-    flag [:d,:database]
+    flag [:'database-directory']
+    flag [:'database-default']
 
     desc 'Copy a password to the clipboard'
     arg_name 'query'
@@ -30,9 +28,12 @@ module Passman
 
         secret = secrets.first
 
-        clipboard = `#{CLIPBOARD_COMMAND} -out`
-        system "echo -n '#{secret.secret}' | #{CLIPBOARD_COMMAND}"
-        system "sleep 5 && echo -n | echo -n '#{clipboard}' | #{CLIPBOARD_COMMAND} &"
+        read_cmd = @config['commands', 'read_clipboard']
+        write_cmd = @config['commands', 'write_clipboard']
+
+        clipboard = `#{read_cmd}`
+        system "echo -n '#{secret.secret}' | #{write_cmd}"
+        system "sleep 5 && echo -n | echo -n '#{clipboard}' | #{write_cmd} &"
       end
     end
 
@@ -72,9 +73,10 @@ module Passman
     end
 
     pre do |global,command,options,args|
-      db_path = global[:database]
-      @db = Database.new(global[:database])
-      @db.read if File.exists? db_path
+      @config = Config.new(global)
+
+      @db = Database.new(@config['database'])
+      @db.read if @db.exists?
 
       true
     end
