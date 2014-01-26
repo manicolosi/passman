@@ -1,6 +1,7 @@
 module Passman
   module Commands
     require_relative 'commands/command'
+    require_relative 'commands/copy'
     require_relative 'commands/databases'
 
     def self.each

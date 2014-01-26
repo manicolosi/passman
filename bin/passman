@@ -22,25 +22,6 @@ module Passman
       end
     end
 
-    desc 'Copy a password to the clipboard'
-    arg_name 'query'
-    command :copy do |c|
-      c.action do |global_options,options,args|
-        secret = @db.find_one(args.first)
-
-        if secret
-          raise "Not found!"
-        end
-
-        read_cmd = @config['commands', 'read_clipboard']
-        write_cmd = @config['commands', 'write_clipboard']
-
-        clipboard = `#{read_cmd}`
-        system "echo -n '#{secret.secret}' | #{write_cmd}"
-        system "sleep 5 && echo -n | echo -n '#{clipboard}' | #{write_cmd} &"
-      end
-    end
-
     desc 'Create a new password record'
     command :new do |c|
       c.action do |global_options,options,args|
