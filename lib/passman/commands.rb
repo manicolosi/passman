@@ -5,6 +5,7 @@ module Passman
     require_relative 'commands/databases'
     require_relative 'commands/dump_all'
     require_relative 'commands/list'
+    require_relative 'commands/new'
 
     def self.each
       constants.map { |c| const_get(c) }.each do |cmd|

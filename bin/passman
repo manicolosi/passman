@@ -22,17 +22,6 @@ module Passman
       end
     end
 
-    desc 'Create a new password record'
-    command :new do |c|
-      c.action do |global_options,options,args|
-        attrs = Hash[ args.map { |a| a.split(/=/) } ]
-        secret = Secret.new(attrs)
-
-        @db.add secret
-        @db.write
-      end
-    end
-
     pre do |global,command,options,args|
       config = Config.new(global)
       database = Database.new(config['database'])
@@ -44,6 +33,8 @@ module Passman
     end
 
     on_error do |exception|
+      puts exception.inspect
+
       true
     end
   end
