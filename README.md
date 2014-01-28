@@ -3,7 +3,7 @@
 A password manager for the command-line. GnuPG is used for encrypted the
 password database.
 
-*WARNING: This is a new project so consider this **unstable***
+*WARNING: This is a new project so consider this <strong>unstable</strong>.*
 
 ## Why?
 
@@ -74,15 +74,19 @@ identifier or more advanced queries using any defined metadata.
 
 A few options are available globally and can be used for any command above.
 
-### `--database-default=name`
+### Default Database
 
-The name of a database to use in the `database-directory`. Do not include the
+`--database-default=name`
+
+The name of a database to use (located in the `database-directory`). Do not include the
 `.pdb.gpg` extension should not be included.
 
 This option is available in the configuratin file in the `[database]` section as
 `default`.
 
-### `--database-directory=path`
+### Database Directory
+
+`--database-directory=path`
 
 The path to the database directory.
 
