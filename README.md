@@ -1,78 +1,90 @@
 # passman
 
-This is a work in progress and it is probably not a good idea to use it yet.
-Most of what's documented here is not working and is just a brain dump.
+A password manager for the command-line. GnuPG is used for encrypted the
+password database.
 
-## Use cases
+*WARNING: This is a new project so consider this **unstable***
 
-1. Storing passwords for different people (me vs spouse)
-2. Storing passwords in different categories (web vs finance)
-3. Storing passwords for different intents (personal vs work)
+## Why?
 
-Numbers 1 and 2 can be solved with metadata fields (owner and category perhaps).
-Three can also be sovled with a metadata field (intent or something like that)
-or with a different database.
+This project is pretty similar to
+[pass](http://www.zx2c4.com/projects/password-store/), but with some key
+differences:
 
-I like the database option, because it allows sharing the database with someone
-else (like sharing the work database with whole team). Some configuration needs
-to happens to allow specifying the default password.
+## No Leaky Abstraction
 
-## Configuration options
+Pass stores passwords one per file, with a filename usually named after the
+purpose of the password. You use this name to reference the password for
+copying, etc. This means that if you use pass, there's probably a directory
+listing that contains all of the services you use.
 
-Use TOML for configuration.
+With passman passwords are stored in a database that's encrypted along with each
+passwords identifier. This has the disadvantage that any operation that needs to
+read the database require that you enter your GPG passphrase (for example
+listing the identifier).
 
-1. Location of databases (defaults to XDG .local location)
-2. External password generator
-3. Default database
-4. Copy tool
-5. GnuPG stuff... (default recipient(s))
+## Queryable Metadata
 
-## Usage
+Pass uses the first line of the password file as the password the the subsequent
+lines you can use for whatever you want.
 
-### Initialize database
+Passman uses YAML for its database format. Fields can be added as needed. For
+example, I store some passwords for some of my wife's accounts. For example, you
+can ask passman for the password where the identifier is `bank` and the owner is
+`wife`. You can also store additional data and like a checking account number.
 
-`$ passman init personal`
-
-This also creates the configuration file specifying the default database to use
-if it doesn't exist.
+## Commands
 
 ### Copy password to clipboard
 
-`$ passman copy web/gmail.com`
+`$ passman copy <query>`
 
-Copy is the default operation and can be dropped:
+The default configuration file uses `xclip` for managing the clipboard. You can
+change the commands with configuration options `read_clipboard` and
+`write_clipboard`. See configuration section below.
 
-`$ passman web/gmail.com`
+See the querying below for details of the query parameter.
 
-Category is also optional (see querying section below):
+### Lists all identifier
 
-`$ passman gmail.com`
+`$ passman list`
 
-### Print password to stdout
+### Lists all databases
 
-`$ passman print web/gmail.com`
+`$ passman databases`
 
-### Print whole record to stdout
+The database configured by the command-line optiosn and configuration file is
+shown with an asterisk.
 
-`$ passman dump web/gmail.com`
+### Prints all records
 
-### Modify password
-### Modify other fields and metadata
-### Edit record in $EDITOR
-### Edit all records in $EDITOR (dangerous)
-### Create and edit a new record
-### Create a new record and generate a password
+`$ passman dump-all`
 
-## Password queries
+## Querying
 
-The copy command requires that the query is unambiguous (only one record is
-found).
+Querying is a bit limited current. The only data you can query against is the
+identifier of a password:
 
-The short-form query `<category>/<identifier>` can be used and is equivalent to
-`category=<categroy> identifier=<identifier>`.
+`gmail.com`
 
-You can query on metadata:
+In the future, you'll be able to do simple queries with a category and
+identifier or more advanced queries using any defined metadata.
 
-Show me also passwords where I am the owner:
+## Global Options
 
-`owner=me`
+A few options are available globally and can be used for any command above.
+
+### `--database-default=name`
+
+The name of a database to use in the `database-directory`. Do not include the
+`.pdb.gpg` extension should not be included.
+
+This option is available in the configuratin file in the `[database]` section as
+`default`.
+
+### `--database-directory=path`
+
+The path to the database directory.
+
+This option is available in the configuration file in the `[database]` section
+as `directory`. It defaults to `~/.local/share/passman`.
