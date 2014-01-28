@@ -15,7 +15,14 @@ module Passman
     singleton_class.send(:alias_method, :new_name, :name)
 
     def self.name
-      new_name.split(/::/).last.downcase
+      new_name.split('::').last.chars.reduce([]) do |words, char|
+        if char =~ /[A-Z]/
+          words << char
+        else
+          words[-1] << char
+        end
+        words
+      end.join('-').downcase
     end
 
     def self.desc(*arg)

@@ -33,23 +33,6 @@ module Passman
       end
     end
 
-    desc 'Dump all password records to stdout'
-    command :'dump-all' do |c|
-      c.action do |global_options, options, args|
-        puts global_options.inspect
-
-        puts "Found #{@db.count} record(s) in database '#{@db.path}'"
-        @db.secrets.each do |secret|
-          puts
-
-          [:identifier, :category, :secret, :metadata].each do |field|
-            value = secret.send field
-            puts "#{field}: #{value}"
-          end
-        end
-      end
-    end
-
     pre do |global,command,options,args|
       @config = Config.new(global)
 
