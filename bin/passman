@@ -34,12 +34,11 @@ module Passman
     end
 
     pre do |global,command,options,args|
-      @config = Config.new(global)
+      config = Config.new(global)
+      database = Database.new(config['database'])
 
-      @db = Database.new(@config['database'])
-      @db.read if @db.exists?
-      global[:config] = @config
-      global[:database] = @db
+      global[:config] = config
+      global[:database] = database
 
       true
     end

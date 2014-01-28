@@ -5,8 +5,6 @@ module Passman
   require 'gpgme'
 
   class Database
-    attr_reader :secrets
-
     def initialize(config)
       @config = config
       @crypto = GPGME::Crypto.new
@@ -29,6 +27,12 @@ module Passman
       "#{@config['default']}.pdb.gpg"
     end
 
+    def secrets
+      read if exists? and !read?
+
+      @secrets
+    end
+
     def find(query)
       secrets.select { |secret| secret.identifier == query }
     end
@@ -37,17 +41,24 @@ module Passman
       find(query).first
     end
 
-    def add(secret) secrets << secret
+    def add(secret)
+      secrets << secret
     end
 
     def count
       secrets.count
     end
 
+    def read?
+      @has_read || false
+    end
+
     def read
+      @has_read = true
+
       File.open(path) do |file|
         data = @crypto.decrypt file
-        secrets.concat read_secrets(data.to_s)
+        @secrets.concat read_secrets(data.to_s)
       end
     end
 
