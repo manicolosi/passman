@@ -11,8 +11,8 @@ module Passman
 
     version Passman::VERSION
 
-    flag [:'database-directory']
-    flag [:'database-default']
+    flag 'database-directory'
+    flag 'database-default'
 
     Passman::Commands.each do |cmd|
       desc cmd.desc
