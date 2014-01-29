@@ -1,5 +1,6 @@
+require 'passman/commands.rb'
 require 'passman/config'
 require 'passman/database'
+require 'passman/query'
 require 'passman/secret'
 require 'passman/version'
-require 'passman/commands.rb'

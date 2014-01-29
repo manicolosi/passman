@@ -41,12 +41,12 @@ module Passman
       @secrets
     end
 
-    def find(query)
-      secrets.select { |secret| secret.identifier == query }
+    def find(query_str)
+      Query.new(query_str, secrets).run
     end
 
-    def find_one(query)
-      find(query).first
+    def find_one(query_str)
+      find(query_str).first
     end
 
     def add(secret)

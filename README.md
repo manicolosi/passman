@@ -43,7 +43,7 @@ The default configuration file uses `xclip` for managing the clipboard. You can
 change the commands with configuration options `read_clipboard` and
 `write_clipboard`. See configuration section below.
 
-See the querying below for details of the query parameter.
+See the querying section below for details of the query parameter.
 
 ### Lists all identifier
 
@@ -70,13 +70,18 @@ way to do this securely.
 
 ## Querying
 
-Querying is a bit limited current. The only data you can query against is the
-identifier of a password:
+Currently, there are two forms of querying that can be performed:
 
 `gmail.com`
 
-In the future, you'll be able to do simple queries with a category and
-identifier or more advanced queries using any defined metadata.
+matches password records where the `identifier` is `gmail.com`. And:
+
+`web/gmail.com`
+
+matches password records where the `category` is `web` and the `identifier` is
+`gmail.com`.
+
+In the future, you'll be able to do more advanced queries using any defined metadata.
 
 ## Global Options
 

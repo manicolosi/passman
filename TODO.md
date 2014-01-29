@@ -2,9 +2,9 @@
 
 ## Password Queries
 
-* Simple query using `<cat>/<ident>` for a category and identifier
 * Ability to query on any field or metadata
 * Multiple query parameters
+* Perform queries for list and dump-all commands
 
 ## Commands
 
@@ -20,3 +20,4 @@
   - Check syntax
   - Warn if records are removed
 * Make `edit-all` more secure
+* Require query to find one record for copy.
