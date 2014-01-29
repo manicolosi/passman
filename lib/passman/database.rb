@@ -46,7 +46,21 @@ module Passman
     end
 
     def find_one(query_str)
-      find(query_str).first
+      results = find query_str
+
+      ambiguous_error! results if results.count > 1
+
+      results.first
+    end
+
+    def ambiguous_error!(results)
+      error = "Ambiguous query. Found #{results.count} records:\n"
+
+      results.each do |secret|
+        error << "  #{secret.category}/#{secret.identifier}\n"
+      end
+
+      raise error
     end
 
     def add(secret)

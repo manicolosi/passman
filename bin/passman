@@ -33,8 +33,10 @@ module Passman
     end
 
     on_error do |exception|
-      puts exception
-      puts exception.backtrace
+      if ENV['PASSMAN_DEBUG']
+        puts exception
+        puts exception.backtrace
+      end
 
       true
     end
