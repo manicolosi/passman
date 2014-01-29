@@ -4,6 +4,7 @@ module Passman
     require_relative 'commands/copy'
     require_relative 'commands/databases'
     require_relative 'commands/dump_all'
+    require_relative 'commands/edit_all'
     require_relative 'commands/list'
     require_relative 'commands/new'
 

@@ -8,6 +8,10 @@ module Passman
     def initialize(config)
       @config = config
       @crypto = GPGME::Crypto.new
+      clear!
+    end
+
+    def clear!
       @secrets = []
     end
 
@@ -24,7 +28,11 @@ module Passman
     end
 
     def file
-      "#{@config['default']}.pdb.gpg"
+      "#{name}.pdb.gpg"
+    end
+
+    def name
+      @config['default']
     end
 
     def secrets
@@ -53,21 +61,29 @@ module Passman
       @has_read || false
     end
 
-    def read
+    def read(file_path = path, decrypt = true)
       @has_read = true
 
-      File.open(path) do |file|
-        data = @crypto.decrypt file
+      File.open(file_path) do |file|
+        data = if decrypt
+          @crypto.decrypt file
+        else
+          file.read
+        end
         @secrets.concat read_secrets(data.to_s)
+
       end
     end
 
-    def write
+    def write(file_path = path, encrypt = true)
       ensure_path_exists
 
-      File.open(path, 'w') do |file|
-        data = dump_secrets
-        @crypto.encrypt data, output: file
+      File.open(file_path, 'w') do |file|
+        if encrypt
+          @crypto.encrypt dump_secrets, output: file
+        else
+          file.write dump_secrets
+        end
       end
     end
 
@@ -80,7 +96,11 @@ module Passman
     private
 
     def read_secrets(data)
-      YAML.load(data).map { |attrs| Secret.new attrs }
+      if data = YAML.load(data)
+        data.map { |attrs| Secret.new attrs }
+      else
+        []
+      end
     end
 
     def dump_secrets

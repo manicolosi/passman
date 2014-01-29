@@ -33,7 +33,8 @@ module Passman
     end
 
     on_error do |exception|
-      puts exception.inspect
+      puts exception
+      puts exception.backtrace
 
       true
     end
