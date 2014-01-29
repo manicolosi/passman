@@ -16,6 +16,10 @@ module Passman
       })
     end
 
+    def query_format
+      "#{category}/#{identifier}"
+    end
+
     private
 
     def set_field(field, value)

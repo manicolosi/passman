@@ -5,7 +5,7 @@ module Passman
 
       def invoke
         database.secrets.each do |secret|
-          puts secret.identifier
+          puts secret.query_format
         end
       end
     end

@@ -57,7 +57,7 @@ module Passman
       error = "Ambiguous query. Found #{results.count} records:\n"
 
       results.each do |secret|
-        error << "  #{secret.category}/#{secret.identifier}\n"
+        error << secret.query_format + "\n"
       end
 
       raise error
