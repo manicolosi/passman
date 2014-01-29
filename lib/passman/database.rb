@@ -49,6 +49,7 @@ module Passman
       results = find query_str
 
       ambiguous_error! results if results.count > 1
+      not_found_error! if results.empty?
 
       results.first
     end
@@ -61,6 +62,10 @@ module Passman
       end
 
       raise error
+    end
+
+    def not_found_error!
+      raise "No records found matching that query."
     end
 
     def add(secret)

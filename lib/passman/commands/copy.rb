@@ -5,9 +5,9 @@ module Passman
       arg_name 'query'
 
       def invoke
-        secret = database.find_one(args.first)
+        raise "You must provide a query." if args.empty?
 
-        raise "Not found!" unless secret
+        secret = database.find_one(args.first)
 
         read_cmd = config['commands', 'read_clipboard']
         write_cmd = config['commands', 'write_clipboard']

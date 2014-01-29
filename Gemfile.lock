@@ -4,6 +4,7 @@ PATH
     passman (0.0.1)
       gli (= 2.9.0)
       gpgme (= 2.0.2)
+      term-ansicolor (= 1.2.2)
       toml (= 0.1.0)
 
 GEM
@@ -21,6 +22,9 @@ GEM
     gpgme (2.0.2)
     parslet (1.5.0)
       blankslate (~> 2.0)
+    term-ansicolor (1.2.2)
+      tins (~> 0.8)
+    tins (0.13.1)
     toml (0.1.0)
       parslet (~> 1.5.0)
 

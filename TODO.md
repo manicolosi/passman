@@ -20,4 +20,3 @@
   - Check syntax
   - Warn if records are removed
 * Make `edit-all` more secure
-* Require query to find one record for copy.
