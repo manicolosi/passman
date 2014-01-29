@@ -60,6 +60,14 @@ shown with an asterisk.
 
 `$ passman dump-all`
 
+### Edit all records
+
+`$ passman edit-all`
+
+This dumps you into your $EDITOR with the decrypted YAML database. Currently
+this makes a tempfile with the plain text database. There's probably a better
+way to do this securely.
+
 ## Querying
 
 Querying is a bit limited current. The only data you can query against is the

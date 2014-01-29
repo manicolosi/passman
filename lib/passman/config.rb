@@ -8,6 +8,8 @@ module Passman
     INITIAL_CONFIG = "config/passman.conf"
     DEFAULT_CONFIG = "~/.config/passman.conf"
 
+    VARIABLES_REGEX = /\$([a-zA-Z_]+[a-zA-Z0-9_]*)|\$\{(.+)\}/
+
     def initialize(cli_options, path = DEFAULT_CONFIG)
       @path = File.expand_path path
 
@@ -16,6 +18,10 @@ module Passman
 
       cli_config = cli_options_to_hash(cli_options)
       @config.merge!(cli_config) { |k, x, y| x.merge(y) }
+    end
+
+    def expand_env_vars(str)
+      str.gsub(VARIABLES_REGEX) { ENV[$1 || $2] }
     end
 
     def cli_options_to_hash(options)
@@ -35,7 +41,13 @@ module Passman
     end
 
     def [](*args)
-      args.reduce(@config) { |c,a| c[a] }
+      value = args.reduce(@config) { |c,a| c[a] }
+
+      if value.is_a? String
+        expand_env_vars value
+      else
+        value
+      end
     end
 
     def write_config

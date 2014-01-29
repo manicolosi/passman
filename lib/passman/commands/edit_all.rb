@@ -12,12 +12,16 @@ module Passman
 
         database.write path, false
 
-        system "vim #{path}"
+        system "#{editor} #{path}"
 
         database.clear!
         database.read path, false
 
         database.write
+      end
+
+      def editor
+        config['commands', 'editor']
       end
     end
   end
