@@ -16,6 +16,7 @@
   - Generate new one
 * Modify record data
 * Edit record data (in $EDITOR)
-* Edit whole database (in $EDITOR)
-  - This is dangerous... should make sure the file is correct syntax before
-    replacing the old one
+* Make `edit-all` less dangerous
+  - Check syntax
+  - Warn if records are removed
+* Make `edit-all` more secure
