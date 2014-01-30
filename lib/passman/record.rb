@@ -1,5 +1,5 @@
 module Passman
-  class Secret
+  class Record
     attr_accessor :identifier, :secret, :category, :metadata
 
     def initialize(attrs)

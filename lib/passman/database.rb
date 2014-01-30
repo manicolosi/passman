@@ -1,9 +1,9 @@
-require_relative 'secret'
+require 'yaml'
+require 'gpgme'
+
+require_relative 'record'
 
 module Passman
-  require 'yaml'
-  require 'gpgme'
-
   class Database
     def initialize(config)
       @config = config
@@ -122,7 +122,7 @@ module Passman
 
     def read_secrets(data)
       if data = YAML.load(data)
-        data.map { |attrs| Secret.new attrs }
+        data.map { |attrs| Record.new attrs }
       else
         []
       end
