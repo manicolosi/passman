@@ -7,6 +7,7 @@ module Passman
     require_relative 'commands/edit_all'
     require_relative 'commands/list'
     require_relative 'commands/new'
+    require_relative 'commands/print'
 
     def self.each
       constants.map { |c| const_get(c) }.each do |cmd|
