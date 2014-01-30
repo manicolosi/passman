@@ -45,7 +45,13 @@ change the commands with configuration options `read_clipboard` and
 
 See the querying section below for details of the query parameter.
 
-### Lists all identifier
+### Print password to stdout
+
+`$ passman print <query>`
+
+See the querying section below for details of the query parameter.
+
+### Lists all identifiers
 
 `$ passman list`
 
