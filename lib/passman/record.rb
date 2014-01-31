@@ -1,32 +1,33 @@
 module Passman
   class Record
-    attr_accessor :identifier, :secret, :category, :metadata
-
     def initialize(attrs)
-      @metadata = {}
-
-      attrs.each { |field, value| set_field field, value }
+      @attrs = attrs
     end
 
     def to_hash
-      @metadata.merge({
-        identifier: identifier,
-        secret: secret,
-        category: category
-      })
+      @attrs
     end
 
     def query_format
       "#{category}/#{identifier}"
     end
 
-    private
+    def fields
+      primary = [:identifier, :category, :login, :secret].select { |f| @attrs.include? f }
+      secondary = @attrs.keys.sort - primary
 
-    def set_field(field, value)
-      if respond_to? :"#{field}="
-        send :"#{field}=", value
+      primary + secondary
+    end
+
+    def [](field)
+      @attrs[field]
+    end
+
+    def method_missing(method, *args)
+      if @attrs.has_key? method
+        @attrs[method]
       else
-        metadata[field.to_sym] = value
+        super method, *args
       end
     end
   end
