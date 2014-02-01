@@ -19,4 +19,6 @@ spec = Gem::Specification.new do |s|
   s.add_runtime_dependency('term-ansicolor', '1.2.2')
 
   s.add_development_dependency('debugger')
+  s.add_development_dependency('cucumber')
+  s.add_development_dependency('rspec-expectations')
 end

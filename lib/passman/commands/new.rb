@@ -4,8 +4,11 @@ module Passman
       desc "Create a new password record"
 
       def invoke
-        attrs = Hash[ args.map { |a| a.split(/=/) } ]
-        secret = Secret.new(attrs)
+        attrs = Hash[ args.map do |a|
+          k, v = a.split(/=/)
+          [k.to_sym, v]
+        end]
+        secret = Record.new(attrs)
 
         database.add secret
         database.write

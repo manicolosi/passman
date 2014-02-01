@@ -51,8 +51,10 @@ module Passman
     end
 
     def write_config
-      puts "Installing initial configuration to #{path}"
+      $stderr.puts "Installing initial configuration to #{path}"
+      dir = File.dirname(path)
 
+      Dir.mkdir dir unless File.exists? dir
       FileUtils.cp(INITIAL_CONFIG, path)
     end
   end

@@ -9,7 +9,7 @@ module Passman
     end
 
     def query_format
-      "#{category}/#{identifier}"
+      "#{self.category}/#{self.identifier}"
     end
 
     def fields
