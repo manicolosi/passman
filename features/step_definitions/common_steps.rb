@@ -9,12 +9,12 @@ Given(/^I have created (?:this|these) record(?:s?):$/) do |table|
   table.raw.each do |identifier, category|
     identifier = "identifier=#{identifier}"
     category   = "category=#{category}"
-    execute('new', identifier, category)
+    invoke 'new', identifier, category
   end
 end
 
 When(/^I run "(.+)"$/) do |cmd|
-  execute(cmd)
+  invoke cmd.split(' ')
 end
 
 Then(/^I see no output$/) do
