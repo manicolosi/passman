@@ -20,7 +20,7 @@ Given(/^I don't have an existing database$/) do
   # We start with no database
 end
 
-Given(/^I have created a record:$/) do |table|
+Given(/^I have created (?:this|these) record(?:s?):$/) do |table|
   table.raw.each do |identifier, category|
     identifier = "identifier=#{identifier}"
     category   = "category=#{category}"

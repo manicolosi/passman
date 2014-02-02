@@ -6,7 +6,7 @@ Feature: List Command
     Then I see no output
 
   Scenario: One record
-    Given I have created a record:
+    Given I have created this record:
       | myidentifier | mycategory |
     When I run "list"
     Then I see:
@@ -15,7 +15,7 @@ Feature: List Command
       """
 
   Scenario: Multiple records
-    Given I have created a record:
+    Given I have created these records:
       | github.com   | dev      |
       | gmail.com    | personal |
       | facebook.com | social   |
