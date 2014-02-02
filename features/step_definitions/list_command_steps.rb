@@ -1,30 +1,37 @@
 require 'open3'
 
-def execute(command, *args)
-  exec = ['bundle exec passman', command, *args].flatten.join(' ')
+class Command
+  attr_reader :command_line, :stdout, :stderr, :status
 
-  Open3.popen3 exec do |stdin, stdout, stderr, wait_thr|
-    @stdout = stdout.gets
-    @stderr = stderr.gets
-    @exit_status = wait_thr.value.exitstatus
+  def initialize(command, *args)
+    @command_line = ['bundle exec passman', command, *args].flatten.join(' ')
+  end
+
+  def execute
+    Open3.popen3 @command_line do |stdin, stdout, stderr, wait_thr|
+      @stdout = stdout.gets
+      @stderr = stderr.gets
+      @status = wait_thr.value.exitstatus
+    end
+
+    self
   end
 end
 
 def assert_stdout(expected)
-  expect(@stdout.to_s.chomp).to eq(expected.chomp)
+  expect(@command.stdout.to_s.chomp).to eq(expected.chomp)
 end
-
 
 Given(/^I don't have an existing database$/) do
   # We start with no database
 end
 
 Given(/^I have created a record$/) do
-  execute 'new', 'identifier=myidentifier', 'category=mycategory'
+  @command = Command.new('new', 'identifier=myidentifier', 'category=mycategory').execute
 end
 
 When(/^I run '(.+)'$/) do |cmd|
-  execute cmd
+  @command = Command.new(cmd).execute
 end
 
 Then(/^I see no output$/) do
