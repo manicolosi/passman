@@ -13,7 +13,7 @@ This project is pretty similar to
 [pass](http://www.zx2c4.com/projects/password-store/), but with some key
 differences:
 
-## No Leaky Abstraction
+### No Leaky Abstraction
 
 Pass stores passwords one per file, with a filename usually named after the
 purpose of the password. You use this name to reference the password for
@@ -25,7 +25,7 @@ passwords identifier. This has the disadvantage that any operation that needs to
 read the database require that you enter your GPG passphrase (for example
 listing the identifier).
 
-## Queryable Metadata
+### Queryable Metadata
 
 Pass uses the first line of the password file as the password the the subsequent
 lines you can use for whatever you want.
