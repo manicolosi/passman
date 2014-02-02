@@ -1,0 +1,7 @@
+Key-Type: default
+Subkey-Type: default
+Name-Real: Joe Tester
+Name-Email: joe@example.com
+%transient-key
+%no-protection
+%commit
