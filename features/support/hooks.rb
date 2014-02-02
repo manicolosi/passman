@@ -14,7 +14,7 @@ module Hooks
     param_file = File.join(File.dirname(__FILE__), 'gpg-params.txt')
     cmd = "gpg --debug-quick-random --batch --gen-key #{param_file}"
     Open3.popen3 cmd do |stdin, stdout, stderr, wait_thr|
-      raise "Failed to generate GPG keys" unless wait_thr.value.success?
+      raise "Failed to generate GPG keys:\n#{stdout}\n#{stderr}" unless wait_thr.value.success?
     end
 
     puts 'done.'
