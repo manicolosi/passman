@@ -4,5 +4,5 @@ rvm:
 
 before_script:
   - which gpg
-  - which gpg2
+  - gpg --version
 script: bundle exec cucumber
