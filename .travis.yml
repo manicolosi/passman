@@ -2,7 +2,6 @@ language: ruby
 rvm:
 - "2.0.0"
 
-before_script:
-  - which gpg
-  - gpg --version
+before_install: sudo apt-get update
+install: sudo apt-get install gnupg2
 script: bundle exec cucumber
