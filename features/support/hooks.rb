@@ -11,10 +11,15 @@ module Hooks
     @home = Dir.mktmpdir
     ENV['HOME'] = @home
 
+    gpg_cmd = if system('which gpg2')
+                'gpg2'
+              else
+                'gpg'
+              end
     param_file = File.join(File.dirname(__FILE__), 'gpg-params.txt')
-    cmd = "gpg --debug-quick-random --batch --gen-key #{param_file}"
+    cmd = "#{gpg_cmd} --debug-quick-random --batch --gen-key #{param_file}"
     Open3.popen3 cmd do |stdin, stdout, stderr, wait_thr|
-      raise "Failed to generate GPG keys:\n#{stdout}\n#{stderr}" unless wait_thr.value.success?
+      raise "Failed to generate GPG keys:" unless wait_thr.value.success?
     end
 
     puts 'done.'
@@ -34,5 +39,19 @@ module Hooks
     dir = File.join(*components)
 
     FileUtils.rm_r dir if File.directory? dir
+  end
+
+  def gpg_cmd
+    if which 'gpg2'
+      'gpg2'
+    elsif which 'gpg'
+      'gpg'
+    else
+      raise 'You must install GnuPG 2.'
+    end
+  end
+
+  def which(program)
+    system "which #{program}"
   end
 end
