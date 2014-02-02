@@ -1,3 +1,7 @@
+require_relative 'command_helper'
+
+World(CommandHelper)
+
 require 'tmpdir'
 require 'fileutils'
 require 'open3'
