@@ -11,11 +11,6 @@ module Hooks
     @home = Dir.mktmpdir
     ENV['HOME'] = @home
 
-    gpg_cmd = if system('which gpg2')
-                'gpg2'
-              else
-                'gpg'
-              end
     param_file = File.join(File.dirname(__FILE__), 'gpg-params.txt')
     cmd = "#{gpg_cmd} --debug-quick-random --batch --gen-key #{param_file}"
     Open3.popen3 cmd do |stdin, stdout, stderr, wait_thr|
@@ -41,7 +36,7 @@ module Hooks
     FileUtils.rm_r dir if File.directory? dir
   end
 
-  def gpg_cmd
+  def self.gpg_cmd
     if which 'gpg2'
       'gpg2'
     elsif which 'gpg'
@@ -51,7 +46,8 @@ module Hooks
     end
   end
 
-  def which(program)
-    system "which #{program}"
+  def self.which(program)
+    `which #{program}`
+    $?
   end
 end
