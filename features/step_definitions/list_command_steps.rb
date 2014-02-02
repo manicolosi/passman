@@ -21,3 +21,10 @@ end
 Then(/^I see:$/) do |expected|
   stdout.chomp.should == expected
 end
+
+Given(/^I don't have a configuration file$/) do
+end
+
+Then(/^I see text like "(.*?)" on stderr$/) do |text|
+  stderr.should =~ /#{text}/
+end
