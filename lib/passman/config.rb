@@ -1,7 +1,7 @@
-module Passman
-  require 'fileutils'
-  require 'toml'
+require 'fileutils'
+require 'toml'
 
+module Passman
   class Config
     attr_reader :path
 
