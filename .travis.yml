@@ -2,4 +2,7 @@ language: ruby
 rvm:
 - "2.0.0"
 
+before_script:
+  - which gpg
+  - which gpg2
 script: bundle exec cucumber
