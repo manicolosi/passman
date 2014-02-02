@@ -34,7 +34,7 @@ GEM
     multi_test (0.0.3)
     parslet (1.5.0)
       blankslate (~> 2.0)
-    rspec-expectations (2.14.4)
+    rspec-expectations (2.14.5)
       diff-lcs (>= 1.1.3, < 2.0)
     term-ansicolor (1.2.2)
       tins (~> 0.8)

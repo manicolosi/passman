@@ -33,9 +33,9 @@ When(/^I run "(.+)"$/) do |cmd|
 end
 
 Then(/^I see no output$/) do
-  expect(@command.stdout).to eq('')
+  @command.stdout.should == ''
 end
 
 Then(/^I see:$/) do |expected|
-  expect(@command.stdout.chomp).to eq(expected)
+  @command.stdout.chomp.should == expected
 end
