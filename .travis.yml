@@ -6,4 +6,3 @@ before_install: sudo apt-get update
 install:
   - sudo apt-get install gnupg2
   - bundle install
-script: bundle exec cucumber
