@@ -10,6 +10,7 @@ module Passman
   module App
     extend GLI::App
     extend Term::ANSIColor
+    include Commands
 
     program_desc 'Password Manager'
     version Passman::VERSION
@@ -22,14 +23,6 @@ module Passman
 
       messages[1..-1].each do |message|
         puts message.chomp
-      end
-    end
-
-    Commands.each do |cmd|
-      desc cmd.desc
-      arg_name cmd.arg_name
-      command cmd.name do |c|
-        c.action &cmd.method(:invoke)
       end
     end
 
