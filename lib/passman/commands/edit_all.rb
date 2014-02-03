@@ -1,4 +1,5 @@
 require 'tempfile'
+require_relative 'command'
 
 module Passman
   module Commands

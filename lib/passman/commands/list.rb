@@ -1,3 +1,5 @@
+require_relative 'command'
+
 module Passman
   module Commands
     class List < Command

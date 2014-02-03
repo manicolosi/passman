@@ -1,3 +1,4 @@
+require_relative 'command'
 require_relative '../record'
 
 module Passman

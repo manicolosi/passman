@@ -1,13 +1,8 @@
 module Passman
   module Commands
-    require_relative 'commands/command'
-    require_relative 'commands/copy'
-    require_relative 'commands/databases'
-    require_relative 'commands/dump_all'
-    require_relative 'commands/edit_all'
-    require_relative 'commands/list'
-    require_relative 'commands/new'
-    require_relative 'commands/print'
+    Dir[ File.join(File.dirname(__FILE__), 'commands/*.rb') ].each do |file|
+      require file
+    end
 
     def self.included(base)
       commands.each do |cmd|
