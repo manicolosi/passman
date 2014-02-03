@@ -15,7 +15,7 @@ describe Passman::Helpers::Hyphenizer do
     it { should == 'multiple-words' }
   end
 
-  context "out modules are stripped" do
+  context "outer modules are stripped" do
     let(:name) { 'OuterModule::InnerModule' }
 
     it { should == 'inner-module' }
