@@ -1,6 +1,7 @@
 # passman
 
 [![Build Status](https://travis-ci.org/manicolosi/passman.png?branch=master)](https://travis-ci.org/manicolosi/passman)
+[![Code Climate](https://codeclimate.com/github/manicolosi/passman.png)](https://codeclimate.com/github/manicolosi/passman)
 
 A password manager for the command-line. GnuPG is used for encrypted the
 password database.
