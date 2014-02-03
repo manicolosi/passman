@@ -1,3 +1,5 @@
+require_relative '../helpers/hyphenizer'
+
 module Passman
   class Command
     attr_reader :global, :options, :args
@@ -12,17 +14,10 @@ module Passman
       @database = global[:database]
     end
 
-    singleton_class.send(:alias_method, :new_name, :name)
+    singleton_class.send(:alias_method, :original_name, :name)
 
     def self.name
-      new_name.split('::').last.chars.reduce([]) do |words, char|
-        if char =~ /[A-Z]/
-          words << char
-        else
-          words[-1] << char
-        end
-        words
-      end.join('-').downcase
+      Helpers::Hyphenizer.hyphenize(original_name)
     end
 
     def self.desc(*arg)
