@@ -1,7 +1,7 @@
+require 'tempfile'
+
 module Passman
   module Commands
-    require 'tempfile'
-
     class EditAll < Command
       desc 'Edit the password database in an editor (DANGEROUS)'
 

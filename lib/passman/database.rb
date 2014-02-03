@@ -2,6 +2,7 @@ require 'yaml'
 require 'gpgme'
 
 require_relative 'record'
+require_relative 'query'
 
 module Passman
   class Database
@@ -12,7 +13,7 @@ module Passman
     end
 
     def clear!
-      @secrets = []
+      @records = []
     end
 
     def path
@@ -35,14 +36,14 @@ module Passman
       @config['default']
     end
 
-    def secrets
+    def records
       read if exists? and !read?
 
-      @secrets
+      @records
     end
 
     def find(query_str)
-      Query.new(query_str, secrets).run
+      Query.new(query_str, records).run
     end
 
     def find_one(query_str)
@@ -59,8 +60,8 @@ module Passman
     def ambiguous_error!(results)
       error = "Ambiguous query. Found #{results.count} records:\n"
 
-      results.each do |secret|
-        error << secret.query_format + "\n"
+      results.each do |record|
+       error << record.query_format + "\n"
       end
 
       raise error
@@ -74,12 +75,12 @@ module Passman
       raise "You must provide a query"
     end
 
-    def add(secret)
-      secrets << secret
+    def add(record)
+      records << record
     end
 
     def count
-      secrets.count
+      records.count
     end
 
     def read?
@@ -95,7 +96,7 @@ module Passman
         else
           file.read
         end
-        @secrets.concat read_secrets(data.to_s)
+        @records.concat read_records(data.to_s)
 
       end
     end
@@ -105,9 +106,9 @@ module Passman
 
       File.open(file_path, 'w') do |file|
         if encrypt
-          @crypto.encrypt dump_secrets, output: file
+          @crypto.encrypt dump_records, output: file
         else
-          file.write dump_secrets
+          file.write dump_records
         end
       end
     end
@@ -120,7 +121,7 @@ module Passman
 
     private
 
-    def read_secrets(data)
+    def read_records(data)
       if data = YAML.load(data)
         data.map { |attrs| Record.new attrs }
       else
@@ -128,8 +129,8 @@ module Passman
       end
     end
 
-    def dump_secrets
-      YAML.dump @secrets.map(&:to_hash)
+    def dump_records
+      YAML.dump @records.map(&:to_hash)
     end
   end
 end

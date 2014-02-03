@@ -2,9 +2,9 @@ require 'gli'
 require 'term/ansicolor'
 
 require_relative 'commands'
-require_relative 'version'
 require_relative 'config'
 require_relative 'database'
+require_relative 'version'
 
 module Passman
   module App
@@ -25,7 +25,7 @@ module Passman
       end
     end
 
-    Passman::Commands.each do |cmd|
+    Commands.each do |cmd|
       desc cmd.desc
       arg_name cmd.arg_name
       command cmd.name do |c|

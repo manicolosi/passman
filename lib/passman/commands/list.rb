@@ -4,8 +4,8 @@ module Passman
       desc "List all identifiers"
 
       def invoke
-        database.secrets.each do |secret|
-          puts secret.query_format
+        database.records.each do |record|
+          puts record.query_format
         end
       end
     end

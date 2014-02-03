@@ -1,3 +1,5 @@
+require_relative '../record'
+
 module Passman
   module Commands
     class New < Command

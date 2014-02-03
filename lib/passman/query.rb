@@ -2,7 +2,6 @@ module Passman
   class Query
     def initialize(query, secrets)
       @secrets = secrets
-
       @fields = {}
 
       if query.include?('/')
