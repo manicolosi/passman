@@ -4,7 +4,7 @@ module Passman
       require file
     end
 
-    def self.included(base)
+    def self.extended(base)
       commands.each do |cmd|
         base.desc cmd.desc
         base.arg_name cmd.arg_name

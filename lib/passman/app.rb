@@ -10,7 +10,7 @@ module Passman
   module App
     extend GLI::App
     extend Term::ANSIColor
-    include Commands
+    extend Commands
 
     program_desc 'Password Manager'
     version Passman::VERSION
