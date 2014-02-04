@@ -31,10 +31,10 @@ listing the identifier).
 Pass uses the first line of the password file as the password the the subsequent
 lines you can use for whatever you want.
 
-Passman uses YAML for its database format. Fields can be added as needed. For
-example, I store some passwords for some of my wife's accounts. For example, you
-can ask passman for the password where the identifier is `bank` and the owner is
-`wife`. You can also store additional data and like a checking account number.
+Passman uses YAML for its database format. Fields can be added as needed and later
+queries on. For example, you can ask passman for the password where the identifier
+is `bank` and the owner is `spouse`. You can also store additional data and like a
+checking account number.
 
 ## Commands
 
