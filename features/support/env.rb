@@ -1,3 +1,5 @@
+require 'debugger'
+
 require_relative 'command_helper'
 require_relative 'hooks'
 

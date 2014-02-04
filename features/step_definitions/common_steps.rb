@@ -6,10 +6,10 @@ Given(/^I don't have a configuration file$/) do
 end
 
 Given(/^I have created (?:this|these) record(?:s?):$/) do |table|
-  table.raw.each do |identifier, category|
-    identifier = "identifier=#{identifier}"
-    category   = "category=#{category}"
-    invoke 'new', identifier, category
+  table.raw.each do |identifier, category, secret|
+    argv = ['new', "identifier=#{identifier}", "category=#{category}"]
+    argv << "secret=#{secret}" if secret
+    invoke argv
   end
 end
 

@@ -21,7 +21,7 @@ module Passman
       def invoke
         puts "Found #{database.count} record(s) in database '#{database.path}'"
 
-        database.secrets.each { |record| print_record record }
+        database.records.each { |record| print_record record }
       end
     end
   end
