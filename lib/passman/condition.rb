@@ -1,3 +1,5 @@
+require_relative 'extensions/string'
+
 module Passman
   class Condition
     def self.and(conditions)
@@ -20,9 +22,8 @@ module Passman
     end
 
     def regex(v)
-      lower_cased = v.chars.all? { |c| c == c.downcase }
-
-      Regexp.new(v, lower_cased)
+      v.extend Extensions::String
+      Regexp.new(v, v.all_lower?)
     end
 
     class And < Condition
