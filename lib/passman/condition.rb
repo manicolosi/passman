@@ -1,11 +1,11 @@
 module Passman
   class Condition
-    def self.and_condition(conditions)
-      AndCondition.new(conditions)
+    def self.and(conditions)
+      And.new(conditions)
     end
 
-    def self.or_condition(conditions)
-      OrCondition.new(conditions)
+    def self.or(conditions)
+      Or.new(conditions)
     end
 
     def initialize(conditions)
@@ -19,7 +19,7 @@ module Passman
       end
     end
 
-    class AndCondition < Condition
+    class And < Condition
       def evaluate_condition(acc, cur)
         acc && cur
       end
@@ -29,7 +29,7 @@ module Passman
       end
     end
 
-    class OrCondition < Condition
+    class Or < Condition
       def evaluate_condition(acc, cur)
         acc || cur
       end

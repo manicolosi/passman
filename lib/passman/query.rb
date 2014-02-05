@@ -13,9 +13,9 @@ module Passman
       @condition ||=
         if @query.include?('/')
           category, identifier = @query.split('/')
-          Condition.and_condition(identifier: identifier, category: category)
+          Condition.and(identifier: identifier, category: category)
         else
-          Condition.or_condition(identifier: @query, category: @query)
+          Condition.or(identifier: @query, category: @query)
         end
     end
 

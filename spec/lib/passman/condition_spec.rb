@@ -5,7 +5,7 @@ describe Passman::Condition do
   let(:conditions) { { a: 'foo', b: 'bar' } }
 
   describe "And Condition" do
-    let(:condition) { described_class.and_condition(conditions) }
+    let(:condition) { described_class.and(conditions) }
 
     context "evaulates to true when all conditions are equal" do
       let(:record) { double 'record', a: 'foo', b: 'bar' }
@@ -21,7 +21,7 @@ describe Passman::Condition do
   end
 
   describe "Or Condition" do
-    let(:condition) { described_class.or_condition(conditions) }
+    let(:condition) { described_class.or(conditions) }
 
     context "evaulates to true when any conditions are equal" do
       let(:record) { double 'record', a: 'foo', b: 'not-bar' }
