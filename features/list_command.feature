@@ -27,7 +27,7 @@ Feature: List Command
       social/facebook.com
       """
 
-  Scenario: Filtering records
+  Scenario: Filtering records by identifier
     Given I have created these records:
       | gmail.com    | work     |
       | gmail.com    | personal |
@@ -37,4 +37,16 @@ Feature: List Command
       """
       work/gmail.com
       personal/gmail.com
+      """
+
+  Scenario: Filtering records by category
+    Given I have created these records:
+      | gmail.com    | work     |
+      | gmail.com    | personal |
+      | facebook.com | personal |
+    When I run "list personal"
+    Then I see:
+      """
+      personal/gmail.com
+      personal/facebook.com
       """

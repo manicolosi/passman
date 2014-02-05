@@ -1,24 +1,26 @@
+require_relative 'condition'
+
 module Passman
   class Query
-    def initialize(query, secrets)
-      @secrets = secrets
-      @fields = {}
+    attr_reader :query, :records
 
-      if query.include?('/')
-        @fields[:category], @fields[:identifier] = query.split('/')
-      else
-        @fields[:identifier] = query
-      end
+    def initialize(query, records)
+      @query = query
+      @records = records
+    end
+
+    def condition
+      @condition ||=
+        if @query.include?('/')
+          category, identifier = @query.split('/')
+          Condition.and_condition(identifier: identifier, category: category)
+        else
+          Condition.or_condition(identifier: @query, category: @query)
+        end
     end
 
     def run
-      @secrets.select do |secret|
-        @fields.reduce(true) do |acc, field_kv|
-          field, value = field_kv
-
-          acc && secret.send(field) == value
-        end
-      end
+      records.select { |record| condition.evaluate record }
     end
   end
 end
