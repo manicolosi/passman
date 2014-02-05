@@ -1,4 +1,4 @@
-require_relative 'extensions/string'
+require_relative 'helpers/string'
 
 module Passman
   class Condition
@@ -22,8 +22,7 @@ module Passman
     end
 
     def regex(v)
-      v.extend Extensions::String
-      Regexp.new(v, v.all_lower?)
+      Regexp.new(v, Helpers::String.all_lower?(v))
     end
 
     class And < Condition
