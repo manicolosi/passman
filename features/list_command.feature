@@ -50,3 +50,14 @@ Feature: List Command
       personal/gmail.com
       personal/facebook.com
       """
+
+  Scenario: Filtering records by identifier and category
+    Given I have created these records:
+      | gmail.com    | work     |
+      | gmail.com    | personal |
+      | facebook.com | personal |
+    When I run "list personal/gmail.com"
+    Then I see:
+      """
+      personal/gmail.com
+      """
