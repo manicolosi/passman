@@ -1,0 +1,63 @@
+require_relative '../../lib/passman/query'
+
+module Passman
+  describe Query do
+    Record = Struct.new(:identifier, :category, :login)
+
+    subject { Query.new(query, records).run }
+
+    let(:record_1) { Record.new 'record-1', 'cat-1', 'tom' }
+    let(:record_2) { Record.new 'record-2', 'cat-1', 'dick' }
+    let(:record_3) { Record.new 'record-3', 'cat-2', 'harry' }
+
+    let(:records) { [record_1, record_2, record_3] }
+
+    describe "with an identifer" do
+      context 'not matching' do
+        let(:query) { 'record-nonexistent' }
+        it { should be_empty }
+      end
+
+      context "matching" do
+        let(:query) { 'record-1' }
+        it { should == [record_1] }
+      end
+    end
+
+    describe "with a category" do
+      context 'not matching' do
+        let(:query) { 'cat-nonexistent' }
+        it { should be_empty }
+      end
+
+      context "matching" do
+        let(:query) { 'cat-1' }
+        it { should == [record_1, record_2] }
+      end
+    end
+
+    describe "with a category" do
+      context 'not matching' do
+        let(:query) { 'cat-nonexistent' }
+        it { should be_empty }
+      end
+
+      context "matching" do
+        let(:query) { 'cat-1' }
+        it { should == [record_1, record_2] }
+      end
+    end
+
+    describe "with an identifeir and category" do
+      context 'not matching' do
+        let(:query) { 'cat-nonexistent/record-nonexistent' }
+        it { should be_empty }
+      end
+
+      context "matching" do
+        let(:query) { 'cat-1/record-2' }
+        it { should == [record_2] }
+      end
+    end
+  end
+end
