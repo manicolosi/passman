@@ -62,5 +62,21 @@ module Passman
         it { should == records }
       end
     end
+
+    describe "case sensitivity" do
+      let(:record_1) { Record.new 'record-1', 'cat-1', 'tom' }
+      let(:record_2) { Record.new 'Record-2', 'cat-1', 'dick' }
+      let(:record_3) { Record.new 'Record-3', 'cat-2', 'harry' }
+
+      context "with all lowercase" do
+        let(:query) { 'record' }
+        it { should == records }
+      end
+
+      context "with a capital letter" do
+        let(:query) { 'Record' }
+        it { should == [record_2, record_3] }
+      end
+    end
   end
 end

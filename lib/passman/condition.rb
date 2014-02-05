@@ -15,8 +15,14 @@ module Passman
     def evaluate(record)
       @conditions.reduce(initial_value) do |acc, kv|
         k, v = kv
-        evaluate_condition(acc, record.send(k) =~ Regexp.new(v))
+        evaluate_condition(acc, record.send(k) =~ regex(v))
       end
+    end
+
+    def regex(v)
+      lower_cased = v.chars.all? { |c| c == c.downcase }
+
+      Regexp.new(v, lower_cased)
     end
 
     class And < Condition
