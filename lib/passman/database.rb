@@ -83,6 +83,10 @@ module Passman
       records.count
     end
 
+    def all
+      records
+    end
+
     def read?
       @has_read || false
     end

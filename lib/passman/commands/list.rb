@@ -6,8 +6,16 @@ module Passman
       desc "List all identifiers"
 
       def invoke
-        database.records.each do |record|
+        records.each do |record|
           puts record.query_format
+        end
+      end
+
+      def records
+        if args.count > 0
+          database.find(args.first)
+        else
+          database.all
         end
       end
     end

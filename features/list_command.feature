@@ -26,3 +26,15 @@ Feature: List Command
       personal/gmail.com
       social/facebook.com
       """
+
+  Scenario: Filtering records
+    Given I have created these records:
+      | gmail.com    | work     |
+      | gmail.com    | personal |
+      | facebook.com | personal |
+    When I run "list gmail.com"
+    Then I see:
+      """
+      work/gmail.com
+      personal/gmail.com
+      """
