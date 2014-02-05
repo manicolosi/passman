@@ -22,17 +22,10 @@ module Passman
         let(:query) { 'record-1' }
         it { should == [record_1] }
       end
-    end
 
-    describe "with a category" do
-      context 'not matching' do
-        let(:query) { 'cat-nonexistent' }
-        it { should be_empty }
-      end
-
-      context "matching" do
-        let(:query) { 'cat-1' }
-        it { should == [record_1, record_2] }
+      context "partial matching" do
+        let(:query) { 'record' }
+        it { should == records }
       end
     end
 
@@ -45,6 +38,11 @@ module Passman
       context "matching" do
         let(:query) { 'cat-1' }
         it { should == [record_1, record_2] }
+      end
+
+      context "partial matching" do
+        let(:query) { 'cat' }
+        it { should == records }
       end
     end
 
@@ -57,6 +55,11 @@ module Passman
       context "matching" do
         let(:query) { 'cat-1/record-2' }
         it { should == [record_2] }
+      end
+
+      context "partial matching" do
+        let(:query) { 'cat/record' }
+        it { should == records }
       end
     end
   end

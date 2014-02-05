@@ -15,7 +15,7 @@ module Passman
     def evaluate(record)
       @conditions.reduce(initial_value) do |acc, kv|
         k, v = kv
-        evaluate_condition(acc, record.send(k) == v)
+        evaluate_condition(acc, record.send(k) =~ Regexp.new(v))
       end
     end
 
