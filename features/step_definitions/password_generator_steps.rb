@@ -3,20 +3,6 @@ def dump_output
   puts "STDERR: #{stderr.inspect}"
 end
 
-def replace_option(name, value)
-  config_file = File.expand_path '~/.config/passman.conf'
-  config = File.read(config_file)
-
-  modified_config = config.gsub(/^#{name} ?=.+$/, "#{name} = \"#{value}\"")
-  File.open(config_file, 'w') do |f|
-    f.write modified_config
-  end
-end
-
-def init_config
-  invoke 'list'
-end
-
 Given(/^I've configured the password generator$/) do
   init_config
   replace_option 'password_gen', 'echo generated_password'
