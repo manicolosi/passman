@@ -115,9 +115,6 @@ The path to the database directory.
 This option is available in the configuration file in the `[database]` section
 as `directory`. It defaults to `~/.local/share/passman`.
 
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/manicolosi/passman/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
 ## Copyright
 
 Copyright (c) 2014 Mark A. Nicolosi. See LICENSE for details.
