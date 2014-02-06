@@ -21,24 +21,32 @@ module Passman
         Helpers::Hyphenizer.hyphenize(original_name)
       end
 
-      def self.desc(*arg)
-        getter_setter :desc, arg
+      def self.desc(*args)
+        getter_setter :desc, args
       end
 
-      def self.arg_name(*arg)
-        getter_setter :arg_name, arg
+      def self.arg_name(*args)
+        getter_setter :arg_name, args
+      end
+
+      def self.switch(*args)
+        getter_setter :switch, args
       end
 
       def self.invoke(global, options, args)
         new(global, options, args).invoke
       end
 
-      def self.getter_setter(var, arg)
-        if arg.empty?
+      def self.getter_setter(var, args)
+        if args.empty?
           instance_variable_get "@#{var}"
         else
-          instance_variable_set "@#{var}", arg.first
+          instance_variable_set "@#{var}", get_value(args)
         end
+      end
+
+      def self.get_value(args)
+        args.count == 1 ? args.first : args
       end
     end
   end

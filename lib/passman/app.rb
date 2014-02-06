@@ -19,7 +19,7 @@ module Passman
     flag 'database-default'
 
     def self.print_error(messages)
-      puts red { messages.first.chomp }
+      $stderr.puts red { messages.first.chomp }
 
       messages[1..-1].each do |message|
         puts message.chomp
@@ -38,8 +38,8 @@ module Passman
 
     on_error do |exception|
       if ENV['PASSMAN_DEBUG']
-        puts exception
-        puts exception.backtrace
+        $stderr.puts exception
+        $stderr.puts exception.backtrace
       end
 
       print_error(exception.to_s.lines)

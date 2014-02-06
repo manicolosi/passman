@@ -9,6 +9,7 @@ module Passman
         base.desc cmd.desc
         base.arg_name cmd.arg_name
         base.command cmd.name do |c|
+          c.switch *cmd.switch if cmd.switch
           c.action &cmd.method(:invoke)
         end
       end
