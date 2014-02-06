@@ -9,7 +9,7 @@ module Passman
       switch ['g', 'generate-password'], desc: 'generate a password'
 
       def invoke
-        attrs = get_attributes args
+        attrs = get_attributes
 
         if options['generate-password']
           pw_gen = PasswordGenerator.new config['commands', 'password_gen']
@@ -22,7 +22,7 @@ module Passman
         database.write
       end
 
-      def get_attributes(args)
+      def get_attributes
         Hash[args.map do |a|
           k, v = a.split(/=/)
           [k.to_sym, v]
