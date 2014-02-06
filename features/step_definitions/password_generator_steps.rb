@@ -14,5 +14,5 @@ end
 
 Then(/^a password gets generated$/) do
   invoke 'print', 'mycategory/myidentifier'
-  stdout.chomp.should == 'generated_password'
+  stdout.should == "generated_password\n"
 end
