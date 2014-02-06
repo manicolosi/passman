@@ -21,4 +21,9 @@ module CommandHelper
     $stdout = previous_stdout
     $stderr = previous_stderr
   end
+
+  def dump_output
+    puts "STDOUT:\n#{stdout}"
+    puts "STDERR:\n#{stderr}"
+  end
 end

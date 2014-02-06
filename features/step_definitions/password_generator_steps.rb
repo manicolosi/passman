@@ -1,8 +1,3 @@
-def dump_output
-  puts "STDOUT: #{stdout.inspect}"
-  puts "STDERR: #{stderr.inspect}"
-end
-
 Given(/^I've configured the password generator$/) do
   init_config
   replace_option 'password_gen', 'echo generated_password'
