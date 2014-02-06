@@ -30,7 +30,7 @@ module Passman
       end
 
       def self.switch(*args)
-        getter_setter :switch, args
+        getter_appender :switch, args
       end
 
       def self.invoke(global, options, args)
@@ -42,6 +42,16 @@ module Passman
           instance_variable_get "@#{var}"
         else
           instance_variable_set "@#{var}", get_value(args)
+        end
+      end
+
+      def self.getter_appender(var, args)
+        current_value = instance_variable_get("@#{var}") || []
+        if args.empty?
+          current_value
+        else
+          current_value << get_value(args)
+          instance_variable_set "@#{var}", current_value
         end
       end
 

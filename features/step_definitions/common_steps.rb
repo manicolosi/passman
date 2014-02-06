@@ -8,7 +8,11 @@ end
 Given(/^I have created (?:this|these) record(?:s?):$/) do |table|
   table.raw.each do |identifier, category, secret|
     argv = ['new', "identifier=#{identifier}", "category=#{category}"]
-    argv << "secret=#{secret}" if secret
+    if secret
+      argv << "secret=#{secret}"
+    else
+      argv << '--no-password'
+    end
     invoke argv
   end
 end

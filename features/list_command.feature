@@ -7,7 +7,7 @@ Feature: List Command
 
   Scenario: One record
     Given I have created this record:
-      | myidentifier | mycategory | mysecret |
+      | myidentifier | mycategory |
     When I run "list"
     Then I see:
       """
@@ -16,9 +16,9 @@ Feature: List Command
 
   Scenario: Multiple records
     Given I have created these records:
-      | github.com   | dev      | mysecret |
-      | gmail.com    | personal | mysecret |
-      | facebook.com | social   | mysecret |
+      | github.com   | dev      |
+      | gmail.com    | personal |
+      | facebook.com | social   |
     When I run "list"
     Then I see:
       """
@@ -29,9 +29,9 @@ Feature: List Command
 
   Scenario: Filtering records by identifier
     Given I have created these records:
-      | gmail.com    | work     | mysecret |
-      | gmail.com    | personal | mysecret |
-      | facebook.com | personal | mysecret |
+      | gmail.com    | work     |
+      | gmail.com    | personal |
+      | facebook.com | personal |
     When I run "list gmail.com"
     Then I see:
       """
@@ -41,9 +41,9 @@ Feature: List Command
 
   Scenario: Filtering records by category
     Given I have created these records:
-      | gmail.com    | work     | mysecret |
-      | gmail.com    | personal | mysecret |
-      | facebook.com | personal | mysecret |
+      | gmail.com    | work     |
+      | gmail.com    | personal |
+      | facebook.com | personal |
     When I run "list personal"
     Then I see:
       """
@@ -53,9 +53,9 @@ Feature: List Command
 
   Scenario: Filtering records by identifier and category
     Given I have created these records:
-      | gmail.com    | work     | mysecret |
-      | gmail.com    | personal | mysecret |
-      | facebook.com | personal | mysecret |
+      | gmail.com    | work     |
+      | gmail.com    | personal |
+      | facebook.com | personal |
     When I run "list personal/gmail.com"
     Then I see:
       """
