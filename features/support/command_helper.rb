@@ -5,6 +5,8 @@ module CommandHelper
   attr_reader :stdout, :stderr
 
   def invoke(*argv)
+    $stdin.rewind if $stdin.is_a? StringIO
+
     @stdout, @stderr = capture_output do
       Passman::App.run argv.flatten
     end
@@ -20,6 +22,19 @@ module CommandHelper
   ensure
     $stdout = previous_stdout
     $stderr = previous_stderr
+  end
+
+  def enter(text)
+    $stdin.puts text
+  end
+
+  def inject_input
+    previous_stdin = $stdin
+    $stdin = StringIO.new
+
+    yield
+
+    $stdin = previous_stdin
   end
 
   def dump_output

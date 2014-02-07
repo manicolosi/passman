@@ -2,17 +2,13 @@ Given(/^I create a new record$/) do
 end
 
 When(/^I answer the questions$/) do
-  previous_stdin = $stdin
+  inject_input do
+    enter 'myidentifier'
+    enter 'mycategory'
+    enter 'mysecret'
 
-  $stdin = StringIO.new
-  $stdin.puts 'myidentifier'
-  $stdin.puts 'mycategory'
-  $stdin.puts 'mysecret'
-  $stdin.rewind
-
-  invoke 'new'
-
-  $stdin = previous_stdin
+    invoke 'new'
+  end
 end
 
 Then(/^I have a record$/) do

@@ -32,8 +32,8 @@ module Passman
       def arg_attributes
         @arg_attributes ||=
           Hash[args.map do |a|
-          k, v = a.split(/=/)
-          [k.to_sym, v]
+            k, v = a.split(/=/)
+            [k.to_sym, v]
           end]
       end
 

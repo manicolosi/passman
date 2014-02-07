@@ -1,6 +1,6 @@
-Feature: List Command
+Feature: New Command
 
-  Scenario: Empty database
+  Scenario: All values are asked
     Given I create a new record
     When I answer the questions
     Then I have a record
