@@ -9,6 +9,11 @@ module Passman
       switch ['g', 'generate-password'], desc: 'generate a password'
       switch 'password', desc: "ask for a password", default_value: true
 
+      def prompt(message)
+        print "#{message}? "
+        $stdin.gets.chomp
+      end
+
       def questions
         {
           identifier: 'Identifier',
@@ -22,9 +27,7 @@ module Passman
 
         @question_attributes ||=
           Hash[questions_to_ask.map do |question_key|
-            question = questions[question_key]
-            print "#{question}? "
-            answer = $stdin.gets.chomp
+            answer = prompt questions[question_key]
             [question_key, answer]
           end]
       end
