@@ -6,7 +6,9 @@
 A password manager for the command-line. GnuPG is used for encrypted the
 password database.
 
-*WARNING: This is a new project so consider this <strong>unstable</strong>.*
+*WARNING: This is a new project so consider this <strong>unstable</strong>.
+Also, things are changing fast and this README hasn't kept up. Once things
+settle down there will be some serious (and simpler) documentation.*
 
 ## Why?
 
