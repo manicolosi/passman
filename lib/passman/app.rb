@@ -19,6 +19,8 @@ module Passman
     flag 'database-default'
 
     def self.print_error(messages)
+      return if messages.empty?
+
       $stderr.puts red { messages.first.chomp }
 
       messages[1..-1].each do |message|
