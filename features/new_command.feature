@@ -1,6 +1,14 @@
 Feature: New Command
 
-  Scenario: All values are asked
-    Given I create a new record
-    When I answer the questions
-    Then I have a record
+  Scenario: Test
+    Given I run "new" and answer these questions:
+      | Identifier? | myidentifier |
+      | Category?   | mycategory   |
+      | Password?   | mysecret     |
+    When I run "dump myidentifier"
+    Then I see something like this:
+      """
+      identifier: myidentifier
+      category:   mycategory
+      secret:     mysecret
+      """

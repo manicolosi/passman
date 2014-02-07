@@ -32,3 +32,17 @@ end
 Then(/^I see text like "(.*?)" on stderr$/) do |text|
   stderr.should =~ /#{text}/
 end
+
+Given(/^I run "(.+)" and answer these questions:$/) do |cmd, table|
+  inject_input do
+    table.raw.each do |question, answer|
+      enter answer
+    end
+
+    invoke cmd
+  end
+end
+
+Then(/^I see something like this:$/) do |text|
+  stdout.should =~ Regexp.new(text)
+end
