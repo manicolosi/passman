@@ -23,3 +23,14 @@ Feature: New Command
       category:   mycategory
       secret:     mysecret
       """
+
+  Scenario: Input password only (short version)
+    Given I run "new mycategory/myidentifier" and answer this questions:
+      | Password? | mysecret |
+    When I run "dump myidentifier"
+    Then I see text like:
+      """
+      identifier: myidentifier
+      category:   mycategory
+      secret:     mysecret
+      """

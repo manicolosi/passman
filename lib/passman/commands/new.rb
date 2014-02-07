@@ -31,14 +31,24 @@ module Passman
 
       def arg_attributes
         @arg_attributes ||=
-          Hash[args.map do |a|
-            k, v = a.split(/=/)
-            [k.to_sym, v]
-          end]
+          {}.tap do |hash|
+            remaining = if args.first =~ /.+\/.+/
+                          cat, id = args.first.split('/')
+                          hash[:category] = cat
+                          hash[:identifier] = id
+                          args[1..-1]
+                        else
+                          args
+                        end
+
+            remaining.each do |arg|
+              k, v = arg.split(/=/)
+              hash[k.to_sym] = v
+            end
+          end
       end
 
       def switch_attributes
-        puts options['password'].inspect
         @switch_attributes ||=
           {}.tap do |hash|
             if options['generate-password']
