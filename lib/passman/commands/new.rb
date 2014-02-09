@@ -19,6 +19,7 @@ module Passman
           identifier: 'Identifier',
           category: 'Category',
           secret: 'Password',
+          secret2: 'Password (again)'
         }
       end
 

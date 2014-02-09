@@ -25,8 +25,9 @@ Feature: New Command
       """
 
   Scenario: Input password only (short version)
-    Given I run "new mycategory/myidentifier" and answer this questions:
-      | Password? | mysecret |
+    Given I run "new mycategory/myidentifier" and answer these questions:
+      | Password?         | mysecret |
+      | Password (again)? | mysecret |
     When I run "dump myidentifier"
     Then I see text like:
       """

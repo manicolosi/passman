@@ -25,6 +25,10 @@ Given(/^I run "(.+)" and answer (?:this|these) questions:$/) do |cmd, table|
 
     invoke cmd.split(' ')
   end
+
+  table.raw.each do |question, answer|
+    stdout.should =~ Regexp.new(question)
+  end
 end
 
 When(/^I run "(.+)"$/) do |cmd|
