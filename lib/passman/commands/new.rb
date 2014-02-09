@@ -19,18 +19,25 @@ module Passman
           identifier: 'Identifier',
           category: 'Category',
           secret: 'Password',
-          secret2: 'Password (again)'
         }
       end
 
-      def question_attributes
-        questions_to_ask = questions.keys - arg_attributes.keys - switch_attributes.keys
+      def questions_to_ask
+        questions.keys - arg_attributes.keys - switch_attributes.keys
+      end
 
+      def question_attributes
         @question_attributes ||=
-          Hash[questions_to_ask.map do |question_key|
-            answer = prompt questions[question_key]
-            [question_key, answer]
-          end]
+          {}.tap do |hash|
+            questions_to_ask.map do |question_key|
+              answer = prompt questions[question_key]
+              if question_key == :secret
+                answer2 = prompt "Password (again)"
+                raise "Passwords don't match" if answer != answer2
+              end
+              hash[question_key] = answer
+            end
+          end
       end
 
       def arg_attributes
