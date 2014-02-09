@@ -22,20 +22,33 @@ module Passman
         }
       end
 
+      def confirmable_questions
+        {
+          secret: "Passwords don't match"
+        }
+      end
+
       def questions_to_ask
         questions.keys - arg_attributes.keys - switch_attributes.keys
+      end
+
+      def ask(key)
+        question = questions[key]
+        answer = prompt question
+
+        if confirmable_questions.keys.include? key
+          confirmation = prompt "#{question} (again)"
+          raise "Passwords don't match" if answer != confirmation
+        end
+
+        answer
       end
 
       def question_attributes
         @question_attributes ||=
           {}.tap do |hash|
-            questions_to_ask.map do |question_key|
-              answer = prompt questions[question_key]
-              if question_key == :secret
-                answer2 = prompt "Password (again)"
-                raise "Passwords don't match" if answer != answer2
-              end
-              hash[question_key] = answer
+            questions_to_ask.each do |question_key|
+              hash[question_key] = ask question_key
             end
           end
       end
