@@ -52,7 +52,7 @@ module CommandHelper
   end
 
   def delay_until
-    Timeout.timeout(2.5) do
+    Timeout.timeout(1) do
       while true
         sleep 0.01
         begin
