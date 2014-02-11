@@ -38,7 +38,7 @@ Feature: New Command
       secret:     mysecret
       """
 
-  Scenario: Input password only (short version)
+  Scenario: Passwords don't match
     Given I run "new mycategory/myidentifier" and answer these questions:
       | Password?         | mysecret    |
       | Password (again)? | notmysecret |
