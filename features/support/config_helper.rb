@@ -1,6 +1,7 @@
 module ConfigHelper
   def init_config
     invoke 'list'
+    @app.join
   end
 
   def replace_option(name, value)

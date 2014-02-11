@@ -9,5 +9,7 @@ end
 
 Then(/^a password gets generated$/) do
   invoke 'print', 'mycategory/myidentifier'
-  stdout.should == "generated_password\n"
+  delay_until do
+    stdout.should == "generated_password\n"
+  end
 end

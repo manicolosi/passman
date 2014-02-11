@@ -17,17 +17,9 @@ Given(/^I have created (?:this|these) record(?:s?):$/) do |table|
   end
 end
 
-Given(/^I run "(.+)" and answer (?:this|these) questions:$/) do |cmd, table|
-  inject_input do
-    table.raw.each do |question, answer|
-      enter answer
-    end
-
-    invoke cmd.split(' ')
-  end
-
+When(/^I answer these questions:$/) do |table|
   table.raw.each do |question, answer|
-    stdout.should =~ Regexp.new(question)
+    enter answer
   end
 end
 
@@ -36,17 +28,33 @@ When(/^I run "(.+)"$/) do |cmd|
 end
 
 Then(/^I see no output$/) do
-  stdout.should == ''
+  delay_until do
+    stdout.should == ''
+  end
 end
 
 Then(/^I see:$/) do |expected|
-  stdout.chomp.should == expected
+  delay_until do
+    stdout.chomp.should == expected
+  end
 end
 
-Then(/^I see text like:$/) do |text|
+Then(/^I see text like:$/) do |jext|
   stdout.should =~ Regexp.new(text)
 end
 
 Then(/^I see text like "(.*?)" on stderr$/) do |text|
-  stderr.should =~ Regexp.new(text)
+  delay_until do
+    stderr.should =~ Regexp.new(text)
+  end
+end
+
+Then(/^I have this record:$/) do |table|
+  invoke 'dump-all'
+
+  table.raw.each do |field, value|
+    delay_until do
+      stdout.should =~ /^#{field}: +#{value}$/
+    end
+  end
 end
