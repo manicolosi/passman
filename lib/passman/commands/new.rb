@@ -55,6 +55,10 @@ module Passman
         question = questions[key]
         answer = prompt question, echo: secret_questions.include?(key)
 
+        if answer.empty?
+          raise "Fields cannot be blank"
+        end
+
         if confirmable_questions.keys.include? key
           confirmation = prompt "#{question} (again)", echo: secret_questions.include?(key)
           raise "Passwords don't match" if answer != confirmation

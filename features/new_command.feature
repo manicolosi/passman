@@ -37,4 +37,10 @@ Feature: New Command
     When I answer these questions:
       | Password?         | mysecret    |
       | Password (again)? | notmysecret |
-    Then I see text like "Passwords don't match." on stderr
+    Then I see text like "Passwords don't match" on stderr
+
+  Scenario: Blank fields
+    Given I run "new"
+    When I answer this question:
+      | Identifier? | |
+    Then I see text like "Fields cannot be blank" on stderr

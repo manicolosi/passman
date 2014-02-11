@@ -17,7 +17,7 @@ Given(/^I have created (?:this|these) record(?:s?):$/) do |table|
   end
 end
 
-When(/^I answer these questions:$/) do |table|
+When(/^I answer (?:this|these) question(?:s?):$/) do |table|
   table.raw.each do |question, answer|
     enter answer
   end
