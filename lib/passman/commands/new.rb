@@ -9,9 +9,24 @@ module Passman
       switch ['g', 'generate-password'], desc: 'generate a password'
       switch 'password', desc: "ask for a password", default_value: true
 
-      def prompt(message)
-        print "#{message}? "
-        $stdin.gets.chomp
+      def with_echo(echo)
+        system 'stty -echo' if echo
+
+        value = yield
+
+        if echo
+          system 'stty echo'
+          print "\n"
+        end
+
+        value
+      end
+
+      def prompt(message, options = {})
+        with_echo options[:echo] do
+          print "#{message}? "
+          $stdin.gets.chomp
+        end
       end
 
       def questions
@@ -28,16 +43,20 @@ module Passman
         }
       end
 
+      def secret_questions
+        [:secret]
+      end
+
       def questions_to_ask
         questions.keys - arg_attributes.keys - switch_attributes.keys
       end
 
       def ask(key)
         question = questions[key]
-        answer = prompt question
+        answer = prompt question, echo: secret_questions.include?(key)
 
         if confirmable_questions.keys.include? key
-          confirmation = prompt "#{question} (again)"
+          confirmation = prompt "#{question} (again)", echo: secret_questions.include?(key)
           raise "Passwords don't match" if answer != confirmation
         end
 
