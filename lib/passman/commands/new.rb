@@ -11,15 +11,12 @@ module Passman
 
       def with_echo(echo)
         system 'stty -echo' if echo
-
-        value = yield
-
+        yield
+      ensure
         if echo
           system 'stty echo'
           print "\n"
         end
-
-        value
       end
 
       def prompt(message, options = {})
