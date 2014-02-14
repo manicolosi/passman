@@ -9,18 +9,18 @@ module Passman
       switch ['g', 'generate-password'], desc: 'generate a password'
       switch 'password', desc: "ask for a password", default_value: true
 
-      def with_echo(echo)
-        system 'stty -echo' if echo
+      def with_echo(disabled)
+        system 'stty -echo' if disabled
         yield
       ensure
-        if echo
+        if disabled
           system 'stty echo'
           print "\n"
         end
       end
 
       def prompt(message, options = {})
-        with_echo options[:echo] do
+        with_echo options[:no_echo] do
           print "#{message}? "
           $stdin.gets.chomp
         end
@@ -50,14 +50,14 @@ module Passman
 
       def ask(key)
         question = questions[key]
-        answer = prompt question, echo: secret_questions.include?(key)
+        answer = prompt question, no_echo: secret_questions.include?(key)
 
         if answer.empty?
           raise "Fields cannot be blank"
         end
 
         if confirmable_questions.keys.include? key
-          confirmation = prompt "#{question} (again)", echo: secret_questions.include?(key)
+          confirmation = prompt "#{question} (again)", no_echo: secret_questions.include?(key)
           raise "Passwords don't match" if answer != confirmation
         end
 
