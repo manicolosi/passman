@@ -18,7 +18,7 @@ module Passman
     end
 
     def self.commands
-      constants.map { |c| const_get(c) }
+      constants.map { |c| const_get(c) }.reject { |c| c == Command }
     end
   end
 end
