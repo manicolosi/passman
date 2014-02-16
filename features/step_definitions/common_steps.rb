@@ -19,6 +19,9 @@ end
 
 When(/^I answer (?:this|these) question(?:s?):$/) do |table|
   table.raw.each do |question, answer|
+    delay_until do
+      stdout.should include(question)
+    end
     enter answer
   end
 end
