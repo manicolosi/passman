@@ -9,7 +9,6 @@ module CommandHelper
   def invoke(*argv)
     if @app
       @app.join
-      @app = nil
     end
 
     @stdin = MockStandardIn.new
