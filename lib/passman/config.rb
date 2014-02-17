@@ -37,17 +37,14 @@ module Passman
 
     def [](*args)
       value = args.reduce(@config) { |c,a| c[a] }
-
-      if value.is_a? String
-        expand_variables value
-      else
-        value
-      end
+      expand_variables value
     end
 
-    def expand_variables(string)
+    def expand_variables(value)
+      return value unless value.is_a? String
+
       @expander ||= Helpers::VariableExpander.new(ENV)
-      @expander.expand string
+      @expander.expand value
     end
 
     def write_config
