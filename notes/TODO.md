@@ -17,9 +17,14 @@
   - Check syntax
   - Warn if records are removed
 * Make `edit-all` more secure
+* Print specified fields
 
 ## Testing
 
-* Better way to inject input during command execution and ability to assert
-  output during execution.
-* Ability to use different GnuPG (i.e. without a passphrase)
+* Ability to use different GnuPG keys (i.e. without a passphrase)
+
+## Packaging
+
+* RubyGems
+* Arch PKGBUILD
+* Debian and RPM packages
