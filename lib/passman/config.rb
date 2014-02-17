@@ -1,5 +1,6 @@
 require 'fileutils'
 require 'toml'
+require_relative 'helpers/variable_expander'
 
 module Passman
   class Config
@@ -7,8 +8,6 @@ module Passman
 
     INITIAL_CONFIG = "config/passman.conf"
     DEFAULT_CONFIG = "~/.config/passman.conf"
-
-    VARIABLES_REGEX = /\$([a-zA-Z_]+[a-zA-Z0-9_]*)|\$\{(.+)\}/
 
     def initialize(cli_options, path = DEFAULT_CONFIG)
       @path = File.expand_path path
@@ -18,10 +17,6 @@ module Passman
 
       cli_config = cli_options_to_hash(cli_options)
       @config.merge!(cli_config) { |k, x, y| x.merge(y) }
-    end
-
-    def expand_env_vars(str)
-      str.gsub(VARIABLES_REGEX) { ENV[$1 || $2] }
     end
 
     def cli_options_to_hash(options)
@@ -44,10 +39,15 @@ module Passman
       value = args.reduce(@config) { |c,a| c[a] }
 
       if value.is_a? String
-        expand_env_vars value
+        expand_variables value
       else
         value
       end
+    end
+
+    def expand_variables(string)
+      @expander ||= Helpers::VariableExpander.new(ENV)
+      @expander.expand string
     end
 
     def write_config
