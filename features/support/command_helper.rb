@@ -12,9 +12,7 @@ module CommandHelper
   def_delegator :@stdin, :enter
 
   def invoke(*argv)
-    if @app
-      @app.join
-    end
+    @app.join if @app
 
     @stdin = MockStandardIn.new
     @stdout = StringIO.new
