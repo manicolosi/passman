@@ -28,16 +28,6 @@ module Passman
       end
     end
 
-    pre do |global,command,options,args|
-      config = Config.new(global)
-      database = Database.new(config['database'])
-
-      global[:config] = config
-      global[:database] = database
-
-      true
-    end
-
     on_error do |exception|
       if ENV['PASSMAN_DEBUG']
         $stderr.puts exception

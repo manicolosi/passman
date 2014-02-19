@@ -11,8 +11,8 @@ module Passman
         @options = options
         @args = args
 
-        @config = global[:config]
-        @database = global[:database]
+        @config = Config.new(global)
+        @database = Database.new(config['database'])
       end
 
       singleton_class.send(:alias_method, :original_name, :name)
