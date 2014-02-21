@@ -32,6 +32,17 @@ Feature: New Command
       | category   | mycategory   |
       | password   | mysecret     |
 
+  Scenario: Additional fields and short version
+    Given I run "new mycategory/myidentifier username=foobar"
+    Then I answer these questions:
+      | Password?         | mysecret |
+      | Password (again)? | mysecret |
+    Then I have this record:
+      | identifier | myidentifier |
+      | category   | mycategory   |
+      | password   | mysecret     |
+      | username   | foobar       |
+
   Scenario: Password don't match
     Given I run "new mycategory/myidentifier"
     When I answer these questions:
