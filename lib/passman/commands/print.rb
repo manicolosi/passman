@@ -7,11 +7,10 @@ module Passman
       arg_name 'query'
 
       def invoke
-        secret = database.find_one(args.first).secret
+        password = database.find_one(args.first).password
+        raise "Record does not have a password" unless password
 
-        raise "Record does not have a secret" unless secret
-
-        puts secret
+        puts password
       end
     end
   end

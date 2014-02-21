@@ -30,18 +30,18 @@ module Passman
         {
           identifier: 'Identifier',
           category: 'Category',
-          secret: 'Password',
+          password: 'Password',
         }
       end
 
       def confirmable_questions
         {
-          secret: "Passwords don't match"
+          password: "Passwords don't match"
         }
       end
 
       def secret_questions
-        [:secret]
+        [:password]
       end
 
       def questions_to_ask
@@ -97,11 +97,11 @@ module Passman
           {}.tap do |hash|
             if options['generate-password']
               pw_gen = PasswordGenerator.new config['commands', 'password_gen']
-              hash[:secret] = pw_gen.generate
+              hash[:password] = pw_gen.generate
             end
 
             if !options['password']
-              hash[:secret] = ''
+              hash[:password] = ''
             end
           end
       end
@@ -113,13 +113,13 @@ module Passman
       end
 
       def invoke
-        if switch_attributes.has_key?(:secret) && arg_attributes.has_key?(:secret)
+        if switch_attributes.has_key?(:password) && arg_attributes.has_key?(:password)
           raise "Can't have your cake and eat it too."
         end
 
-        secret = Record.new(get_attributes)
+        record = Record.new(get_attributes)
 
-        database.add secret
+        database.add record
         database.write
       end
     end

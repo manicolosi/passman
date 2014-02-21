@@ -10,7 +10,7 @@ Feature: New Command
     Then I have this record:
       | identifier | myidentifier |
       | category   | mycategory   |
-      | secret     | mysecret     |
+      | password   | mysecret     |
 
   Scenario: Input password only
     Given I run "new identifier=myidentifier category=mycategory"
@@ -20,7 +20,7 @@ Feature: New Command
     Then I have this record:
       | identifier | myidentifier |
       | category   | mycategory   |
-      | secret     | mysecret     |
+      | password   | mysecret     |
 
   Scenario: Input password only (short version)
     Given I run "new mycategory/myidentifier"
@@ -30,7 +30,7 @@ Feature: New Command
     Then I have this record:
       | identifier | myidentifier |
       | category   | mycategory   |
-      | secret     | mysecret     |
+      | password   | mysecret     |
 
   Scenario: Password don't match
     Given I run "new mycategory/myidentifier"

@@ -13,7 +13,7 @@ module Passman
     end
 
     def fields
-      primary = [:identifier, :category, :login, :secret].select { |f| @attrs.include? f }
+      primary = [:identifier, :category, :login, :password].select { |f| @attrs.include? f }
       secondary = @attrs.keys.sort - primary
 
       primary + secondary

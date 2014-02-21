@@ -6,10 +6,10 @@ Given(/^I don't have a configuration file$/) do
 end
 
 Given(/^I have created (?:this|these) record(?:s?):$/) do |table|
-  table.raw.each do |identifier, category, secret|
+  table.raw.each do |identifier, category, password|
     argv = ['new', "identifier=#{identifier}", "category=#{category}"]
-    if secret
-      argv << "secret=#{secret}"
+    if password
+      argv << "password=#{password}"
     else
       argv << '--no-password'
     end
