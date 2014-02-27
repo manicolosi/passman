@@ -19,9 +19,19 @@ module Passman
       end
 
       def invoke
-        puts "Found #{database.count} record(s) in database '#{database.path}'"
+        puts "Found #{records.count} record(s) in database '#{database.path}'"
 
-        database.records.each { |record| print_record record }
+        records.each do |record|
+          print_record record
+        end
+      end
+
+      def records
+        @records ||= if args.count > 0
+          database.find(args.first)
+        else
+          database.all
+        end
       end
     end
   end
