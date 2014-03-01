@@ -12,5 +12,5 @@ Feature: Configuration
       | dump         |
       | edit-all     |
       | list         |
-      | new category=mycategory identifier=myidentifier --no-password |
+      | new mycategory/myidentifier --no-password |
       | print        |
