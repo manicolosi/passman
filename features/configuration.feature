@@ -9,7 +9,7 @@ Feature: Configuration
       | command      |
       | copy foo/bar |
       | databases    |
-      | dump-all     |
+      | dump         |
       | edit-all     |
       | list         |
       | new category=mycategory identifier=myidentifier --no-password |

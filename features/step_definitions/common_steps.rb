@@ -53,7 +53,7 @@ Then(/^I see text like "(.*?)" on stderr$/) do |text|
 end
 
 Then(/^I have this record:$/) do |table|
-  invoke 'dump-all'
+  invoke 'dump'
 
   table.raw.each do |field, value|
     delay_until do

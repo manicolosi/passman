@@ -2,8 +2,8 @@ require_relative 'command'
 
 module Passman
   module Commands
-    class DumpAll < Command
-      desc 'Dump all password records to stdout'
+    class Dump < Command
+      desc 'Dump records to stdout'
 
       def print_record(record)
         puts
