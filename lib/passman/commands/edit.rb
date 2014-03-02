@@ -27,19 +27,19 @@ module Passman
         begin
           tmpfile.write dump_records
           tmpfile.close
-
           system "#{editor} #{tmpfile.path}"
 
           data = YAML.load_file(tmpfile)
-          if data
-            new_records = data.map { |attrs| Record.new attrs }
-            raise "Record count doesn't match. Aborting" if new_records.count != records.count
-            records.zip new_records
-          else
-            raise "No records found! Aborting."
-          end
         ensure
           tmpfile.unlink
+        end
+
+        if data
+          new_records = data.map { |attrs| Record.new attrs }
+          raise "Record count doesn't match. Aborting" if new_records.count != records.count
+          records.zip new_records
+        else
+          raise "No records found! Aborting."
         end
       end
 
