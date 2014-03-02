@@ -10,7 +10,6 @@ Feature: Configuration
       | copy foo/bar |
       | databases    |
       | dump         |
-      | edit-all     |
       | list         |
       | new mycategory/myidentifier --no-password |
       | print        |
