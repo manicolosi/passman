@@ -79,6 +79,11 @@ module Passman
       records << record
     end
 
+    def replace(original, new)
+      records.delete(original)
+      records << new
+    end
+
     def count
       records.count
     end
@@ -101,7 +106,6 @@ module Passman
           file.read
         end
         @records.concat read_records(data.to_s)
-
       end
     end
 
