@@ -12,11 +12,6 @@
   - Prompt for new one
   - Generate new one
 * Modify record data
-* Edit record data (in $EDITOR)
-* Make `edit-all` less dangerous
-  - Check syntax
-  - Warn if records are removed
-* Make `edit-all` more secure
 * Print specified fields
 
 ## Testing
