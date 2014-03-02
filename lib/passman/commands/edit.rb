@@ -16,11 +16,23 @@ module Passman
         database.write
       end
 
+      def query
+        args.first if args.count > 0
+      end
+
+      def all?
+        options['all']
+      end
+
       def records
-        @records ||= if args.count > 0
-          database.find(args.first)
-        else
+        raise "Cannot edit all records with a query." if all? && query
+
+        if all?
           database.all
+        elsif query
+          database.find(query)
+        else
+          raise "Need a query or `--all` switch specified"
         end
       end
 
