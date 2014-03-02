@@ -5,6 +5,8 @@ module Passman
   module Commands
     class Edit < Command
       desc 'Edit records in a text editor'
+      switch ['a', 'all'], desc: 'All records', default_value: false, negatable: false
+      arg_name 'query'
 
       def invoke
         records = edit_records.each do |original, new|
