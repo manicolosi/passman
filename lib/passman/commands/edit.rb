@@ -7,32 +7,44 @@ module Passman
       desc 'Edit records in a text editor'
 
       def invoke
-        new_record = edit_record
-        database.replace(record, new_record)
+        records = edit_records.each do |original, new|
+          database.replace(original, new)
+        end
+
         database.write
       end
 
-      def record
-        database.find_one(args.first)
+      def records
+        @records ||= if args.count > 0
+          database.find(args.first)
+        else
+          database.all
+        end
       end
 
-      def edit_record
-        tmpfile = Tempfile.new(record.identifier)
+      def edit_records
+        tmpfile = Tempfile.new(database.name)
         begin
-          tmpfile.write dump_record
+          tmpfile.write dump_records
           tmpfile.close
 
           system "#{editor} #{tmpfile.path}"
 
           data = YAML.load_file(tmpfile)
-          record = Record.new(data)
+          if data
+            new_records = data.map { |attrs| Record.new attrs }
+            raise "Record count doesn't match. Aborting" if new_records.count != records.count
+            records.zip new_records
+          else
+            raise "No records found! Aborting."
+          end
         ensure
           tmpfile.unlink
         end
       end
 
-      def dump_record
-        YAML.dump record.to_hash
+      def dump_records
+        YAML.dump records.map(&:to_hash)
       end
 
       def editor
