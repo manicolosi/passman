@@ -2,7 +2,8 @@ session:
   name: passman
   windows:
     - layout: main-vertical
+      with_env_var: false
       panes:
-        - cmd: "vim ."
-        - cmd: "be rake console"
-        - cmd: ""
+        - cmd: vim .
+        - cmd: be rake console
+        - cmd:
