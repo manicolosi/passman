@@ -1,0 +1,8 @@
+session:
+  name: passman
+  windows:
+    - layout: main-vertical
+      panes:
+        - cmd: "vim ."
+        - cmd: "be rake console"
+        - cmd: ""
