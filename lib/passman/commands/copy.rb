@@ -1,28 +1,21 @@
 require_relative 'command'
 require_relative '../clipboard'
+require_relative '../command_concerns/password'
 
 module Passman
   module Commands
     class Copy < Command
+      include CommandConcerns::Password
+
       desc 'Copy a password to the clipboard'
       arg_name 'query'
 
       def invoke
-        raise "Record does not have a password" unless record.password
-
-        clipboard.copy_and_restore(record.password)
+        clipboard.copy_and_restore(password)
       end
 
       def clipboard
         Clipboard.new(config)
-      end
-
-      def record
-        @record ||= database.find_one(query)
-      end
-
-      def query
-        args.first
       end
     end
   end

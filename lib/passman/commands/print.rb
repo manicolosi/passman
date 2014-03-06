@@ -1,15 +1,15 @@
 require_relative 'command'
+require_relative '../command_concerns/password'
 
 module Passman
   module Commands
     class Print < Command
+      include CommandConcerns::Password
+
       desc 'Prints a password to stdout'
       arg_name 'query'
 
       def invoke
-        password = database.find_one(args.first).password
-        raise "Record does not have a password" unless password
-
         puts password
       end
     end
