@@ -1,4 +1,4 @@
-require_relative '../../lib/passman/query'
+require_relative '../../../lib/passman/query'
 
 module Passman
   describe Query do
@@ -46,7 +46,7 @@ module Passman
       end
     end
 
-    describe "with an identifeir and category" do
+    describe "with an identifier and category" do
       context 'not matching' do
         let(:query) { 'cat-nonexistent/record-nonexistent' }
         it { should be_empty }
