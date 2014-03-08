@@ -10,7 +10,7 @@ module Passman
       end
 
       def query
-        args.first
+        args
       end
     end
   end

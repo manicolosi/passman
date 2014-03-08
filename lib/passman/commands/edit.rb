@@ -17,7 +17,7 @@ module Passman
       end
 
       def query
-        args.first if args.count > 0
+        args if args.count > 0
       end
 
       def all?

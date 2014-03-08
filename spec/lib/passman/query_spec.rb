@@ -4,13 +4,15 @@ module Passman
   describe Query do
     Record = Struct.new(:identifier, :category, :login)
 
-    subject { described_class.new(query, records).run }
+    subject { described_class.new(queries, records).run }
 
     let(:record_1) { Record.new 'record-1', 'cat-1', 'tom' }
     let(:record_2) { Record.new 'record-2', 'cat-1', 'dick' }
     let(:record_3) { Record.new 'record-3', 'cat-2', 'harry' }
 
     let(:records) { [record_1, record_2, record_3] }
+
+    let(:queries) { [query] }
 
     describe "with an identifer" do
       context 'not matching' do
@@ -60,6 +62,23 @@ module Passman
       context "partial matching" do
         let(:query) { 'cat/record' }
         it { should == records }
+      end
+    end
+
+    describe "with multiple args" do
+      context 'both matching identifier and category' do
+        let(:queries) { %w[record-1 cat-1] }
+        it { should == [record_1] }
+      end
+
+      context 'both matching identifier' do
+        let(:queries) { %w[record 1] }
+        it { should == [record_1, record_2] }
+      end
+
+      context 'one matching' do
+        let(:queries) { %w[record-1 cat-2] }
+        it { should be_empty }
       end
     end
 

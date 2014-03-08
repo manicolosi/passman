@@ -28,7 +28,7 @@ module Passman
 
       def records
         @records ||= if args.count > 0
-          database.find(args.first)
+          database.find(args)
         else
           database.all
         end
