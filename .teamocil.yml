@@ -3,6 +3,7 @@ session:
   windows:
     - layout: main-vertical
       with_env_var: false
+      prefix_with_space: true
       panes:
         - cmd: vim .
         - cmd: be rake console

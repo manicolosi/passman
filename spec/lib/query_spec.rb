@@ -4,7 +4,7 @@ module Passman
   describe Query do
     Record = Struct.new(:identifier, :category, :login)
 
-    subject { Query.new(query, records).run }
+    subject { described_class.new(query, records).run }
 
     let(:record_1) { Record.new 'record-1', 'cat-1', 'tom' }
     let(:record_2) { Record.new 'record-2', 'cat-1', 'dick' }
