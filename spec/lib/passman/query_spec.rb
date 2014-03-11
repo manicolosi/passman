@@ -1,14 +1,17 @@
 require_relative '../../../lib/passman/query'
+require_relative '../../../lib/passman/record'
 
 module Passman
   describe Query do
-    Record = Struct.new(:identifier, :category, :login)
+    def create_record(identifier, category, login)
+      Record.new(identifier: identifier, category: category, login: login)
+    end
 
     subject { described_class.new(queries, records).run }
 
-    let(:record_1) { Record.new 'record-1', 'cat-1', 'tom' }
-    let(:record_2) { Record.new 'record-2', 'cat-1', 'dick' }
-    let(:record_3) { Record.new 'record-3', 'cat-2', 'harry' }
+    let(:record_1) { create_record 'record-1', 'cat-1', 'tom' }
+    let(:record_2) { create_record 'record-2', 'cat-1', 'dick' }
+    let(:record_3) { create_record 'record-3', 'cat-2', 'harry' }
 
     let(:records) { [record_1, record_2, record_3] }
 
@@ -82,10 +85,22 @@ module Passman
       end
     end
 
+    describe "substring match on field value" do
+      context "exact field value" do
+        let(:query) { 'login:tom' }
+        it { should == [record_1] }
+      end
+
+      context "partial field value" do
+        let(:query) { 'login:d' }
+        it { should == [record_2] }
+      end
+    end
+
     describe "case sensitivity" do
-      let(:record_1) { Record.new 'record-1', 'cat-1', 'tom' }
-      let(:record_2) { Record.new 'Record-2', 'cat-1', 'dick' }
-      let(:record_3) { Record.new 'Record-3', 'cat-2', 'harry' }
+      let(:record_1) { create_record 'record-1', 'cat-1', 'tom' }
+      let(:record_2) { create_record 'Record-2', 'cat-1', 'dick' }
+      let(:record_3) { create_record 'Record-3', 'cat-2', 'harry' }
 
       context "with all lowercase" do
         let(:query) { 'record' }

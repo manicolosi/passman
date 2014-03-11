@@ -23,6 +23,10 @@ module Passman
       @attrs[field]
     end
 
+    def respond_to?(method)
+      @attrs.has_key?(method.to_sym) || super(method)
+    end
+
     def method_missing(method, *args)
       if @attrs.has_key? method
         @attrs[method]

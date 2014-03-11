@@ -13,6 +13,9 @@ module Passman
       if query.include?('/')
         category, identifier = query.split('/')
         Condition.and(identifier: identifier, category: category)
+      elsif query.include?(':')
+        key, value = query.split(':')
+        Condition.or(key => value, identifier: query, category: query)
       else
         Condition.or(identifier: query, category: query)
       end

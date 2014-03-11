@@ -16,9 +16,13 @@ module Passman
 
     def evaluate(record)
       @conditions.reduce(initial_value) do |acc, kv|
-        k, v = kv
-        evaluate_condition(acc, record.send(k) =~ regex(v))
+        field, value = kv
+        evaluate_condition acc, field_matches?(record, field, value)
       end
+    end
+
+    def field_matches?(record, field, value)
+      record.send(field) =~ regex(value) if record.respond_to? field
     end
 
     def regex(v)
