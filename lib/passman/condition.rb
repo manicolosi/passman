@@ -22,6 +22,8 @@ module Passman
     end
 
     def field_matches?(record, field, value)
+      return if value.nil?
+
       record.send(field) =~ regex(value) if record.respond_to? field
     end
 
