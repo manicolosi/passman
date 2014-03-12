@@ -95,6 +95,11 @@ module Passman
         let(:query) { 'login:d' }
         it { should == [record_2] }
       end
+
+      context "field exists" do
+        let(:query) { 'login:' }
+        it { should == records }
+      end
     end
 
     describe "case sensitivity" do
