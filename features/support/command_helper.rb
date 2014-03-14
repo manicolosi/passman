@@ -12,6 +12,8 @@ module CommandHelper
   def_delegator :@stdin, :enter
 
   def invoke(*argv)
+    Thread.abort_on_exception = true
+
     @app.join if @app
 
     @stdin = MockStandardIn.new
