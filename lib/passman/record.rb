@@ -1,7 +1,15 @@
 module Passman
   class Record
     def initialize(attrs)
-      @attrs = attrs
+      @attrs = stringify_keys(attrs)
+    end
+
+    def stringify_keys(hash)
+      hash.reduce(Hash.new) do |acc, kv|
+        key, value = kv
+        acc[key.to_s] = value
+        acc
+      end
     end
 
     def to_hash
@@ -12,24 +20,29 @@ module Passman
       "#{category}/#{identifier}"
     end
 
-    def fields
-      primary = [:identifier, :category, :login, :password].select { |f| @attrs.include? f }
-      secondary = @attrs.keys.sort - primary
+    def primary_keys
+      %w[identifier category login password].select { |f| @attrs.include? f }
+    end
 
-      primary + secondary
+    def secondary_keys
+      @attrs.keys.sort - primary_keys
+    end
+
+    def fields
+      primary_keys + secondary_keys
     end
 
     def [](field)
-      @attrs[field]
+      @attrs[field.to_s]
     end
 
     def respond_to?(method)
-      @attrs.has_key?(method.to_sym) || super(method)
+      @attrs.has_key?(method.to_s) || super(method)
     end
 
     def method_missing(method, *args)
-      if @attrs.has_key? method
-        @attrs[method]
+      if @attrs.has_key? method.to_s
+        @attrs[method.to_s]
       else
         super method, *args
       end

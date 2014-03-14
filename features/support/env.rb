@@ -4,8 +4,6 @@ require_relative 'command_helper'
 require_relative 'config_helper'
 require_relative 'hooks'
 
-ENV['PASSMAN_DEBUG'] = 'true'
-
 World(CommandHelper)
 World(ConfigHelper)
 

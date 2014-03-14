@@ -20,13 +20,13 @@ module CommandHelper
     @stdout = StringIO.new
     @stderr = StringIO.new
 
-    @app = Thread.new do
-      $stdin = @stdin
-      $stdout = @stdout
-      $stderr = @stderr
+      @app = Thread.new do
+        $stdin = @stdin
+        $stdout = @stdout
+        $stderr = @stderr
 
-      Passman::App.run argv.flatten
-    end
+        Passman::App.run argv.flatten
+      end
   end
 
   def dump_output
