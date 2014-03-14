@@ -29,10 +29,7 @@ module Passman
     end
 
     on_error do |exception|
-      if ENV['PASSMAN_DEBUG']
-        $stderr.puts exception
-        $stderr.puts exception.backtrace
-      end
+      raise exception if ENV['PASSMAN_DEBUG']
 
       print_error(exception.to_s.lines)
 
